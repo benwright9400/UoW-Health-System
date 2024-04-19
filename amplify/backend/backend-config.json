@@ -14,6 +14,34 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "AssignStaffHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "AssignStaffFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "BookingSurgeryHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "BookingSurgeryFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "BuildingHandler": {
       "dependsOn": [
         {
@@ -37,6 +65,20 @@
           ],
           "category": "function",
           "resourceName": "CleaningOrderFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "HealthcarePlanHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "HealthcarePlanFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -217,12 +259,32 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "AssignStaffFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "BookingSurgeryFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "BuildingFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
     "CleaningOrderFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "DrugsFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "HealthcarePlanFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -295,6 +357,38 @@
         }
       ]
     },
+    "AMPLIFY_function_AssignStaffFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AssignStaffFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_AssignStaffFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AssignStaffFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_BookingSurgeryFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "BookingSurgeryFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_BookingSurgeryFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "BookingSurgeryFunction"
+        }
+      ]
+    },
     "AMPLIFY_function_BuildingFunction_deploymentBucketName": {
       "usedBy": [
         {
@@ -324,6 +418,38 @@
         {
           "category": "function",
           "resourceName": "CleaningOrderFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DrugsFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugsFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DrugsFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugsFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_HealthcarePlanFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "HealthcarePlanFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_HealthcarePlanFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "HealthcarePlanFunction"
         }
       ]
     },

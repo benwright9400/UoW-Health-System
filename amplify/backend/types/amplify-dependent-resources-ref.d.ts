@@ -5,12 +5,27 @@ export type AmplifyDependentResourcesAttributes = {
       "ApiName": "string",
       "RootUrl": "string"
     },
+    "AssignStaffHandler": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
+    "BookingSurgeryHandler": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "BuildingHandler": {
       "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
     },
     "CleaningOrderHandler": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
+    "HealthcarePlanHandler": {
       "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
@@ -85,6 +100,20 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     },
+    "AssignStaffFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "BookingSurgeryFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "BuildingFunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
@@ -93,6 +122,20 @@ export type AmplifyDependentResourcesAttributes = {
       "Region": "string"
     },
     "CleaningOrderFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "DrugsFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "HealthcarePlanFunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

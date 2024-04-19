@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "WardOrderFunction",
+            "BookingSurgeryFunction",
             {
               "Fn::Join": [
                 "",
                 [
-                  "WardOrderFunction",
+                  "BookingSurgeryFunction",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "healthsystemLambdaRole3afd0c30",
+            "healthsystemLambdaRolee31257a8",
             {
               "Fn::Join": [
                 "",
                 [
-                  "healthsystemLambdaRole3afd0c30",
+                  "healthsystemLambdaRolee31257a8",
                   "-",
                   {
                     "Ref": "env"
