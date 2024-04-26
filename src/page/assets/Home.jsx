@@ -11,6 +11,9 @@ import Wards from './Wards'
 import WardCreationForm from './page/WardCreationForm'
 import Treatments from './Treatments'
 import TreatmentCreationForm from './page/TreatmentCreationForm'
+import TreatmentCategories from './TreatmentCategories'
+import TreatmentCategoriesCreationForm from './page/TreatmentCategoriesCreationForm'
+import WardAdmin from './WardAdmin'
 
 const Links = () => {
   const permissions = useContext(AuthenticationContext).permissions
@@ -37,10 +40,26 @@ const Links = () => {
     }
   }
 
+  if (permissions.includes('ward.admin')) {
+    pages['Ward Admin'] = {
+      description: 'Manage ward notes, orders and staff assignment for a shift',
+      site: 'ward-admin'
+    }
+  }
+
   if (permissions.includes('treatments.view')) {
     pages['Treatments'] = {
-      description: 'Create, view, update and delete treatment services provided by the hopsital.',
+      description:
+        'Create, view, update and delete treatment services provided by the hopsital.',
       site: 'treatments'
+    }
+  }
+
+  if (permissions.includes('treatment.categories.view')) {
+    pages['Treatment Categories'] = {
+      description:
+        'Create, view, update and delete treatment categories within the hopsital.',
+      site: 'treatment-categories'
     }
   }
 
@@ -88,6 +107,18 @@ const AssetRoutes = permissions => {
         </Route>
       ) : null}
 
+      {permissions.includes('treatment.categories.view') ? (
+        <Route path="treatment-categories">
+          <Route index element={<TreatmentCategories />} />
+          <Route path="create" element={<TreatmentCategoriesCreationForm />} />
+        </Route>
+      ) : null}
+
+      {permissions.includes('ward.admin') ? (
+        <Route path="ward-admin">
+          <Route index element={<WardAdmin />} />
+        </Route>
+      ) : null}
     </Route>
   )
 }

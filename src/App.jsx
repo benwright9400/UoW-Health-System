@@ -65,10 +65,8 @@ function App() {
               <Routes>
                 <Route path="*" element={<Navigation />}>
                   <Route index path="*" element={<Landing />} />
-                  {ScheduleRoutes(authorisation.permissions)}
-                  {PatientRoutes(authorisation.permissions)}
-                  {AssetRoutes(authorisation.permissions)}
-                  {StaffRoutes(authorisation.permissions)}
+                  {ScheduleRoutes(authorisation.permissions)} {PatientRoutes(authorisation.permissions)}
+                  {AssetRoutes(authorisation.permissions)} {StaffRoutes(authorisation.permissions)}
                 </Route>
               </Routes>
             ) : (

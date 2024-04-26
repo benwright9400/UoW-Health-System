@@ -12,6 +12,7 @@ const awsServerlessExpressMiddleware = require('aws-serverless-express/middlewar
 const AWS = require('aws-sdk')
 const { Pool } = require('pg')
 const PatientAPI = require('./patientAPI')
+const SecretsManager = require('@aws-sdk/client-secrets-manager')
 
 // declare a new express app
 const app = express()
@@ -111,7 +112,7 @@ app.get('/v1/resources/treatments/patient', (req, res) => {
         type: 'string'                  
   } */
 
-  return PatientAPI.upsert(req, res, setup);
+  return PatientAPI.query(req, res, setup);
 
 });
 

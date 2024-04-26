@@ -26,7 +26,7 @@ const Links = () => {
   return <IndexGenerator title="Patient Management" contents={Pages} />
 }
 
-const Patients = () => {
+const Template = () => {
   return (
     <Box style={{ padding: '1rem' }}>
       <Outlet />
@@ -34,37 +34,36 @@ const Patients = () => {
   )
 }
 
-const PatientRoutes = permissions => {
-  return (
-    <Route path="patients" element={<Patients />}>
-      <Route index path="*" element={<Links />} />
+const PatientRoutes = permissions => (
+  <Route path="patients" element={<Template />}>
+    <Route index path="*" element={<Links />} />
 
-      {permissions.includes('treatments.view') ? (
-        <Route path="treatments">
-          <Route index element={<h1>Treatment Appointments</h1>} />
-        </Route>
-      ) : null}
+    {permissions.includes('appointments.view') ? (
+      <Route
+        path="treatment-appointments"
+        element={<h1>Treatment Appointments</h1>}
+      />
+    ) : null}
 
-      {permissions.includes('prescriptions.view') ? (
-        <Route path="prescriptions">
-          <Route index element={<h1>Prescription Management</h1>} />
-        </Route>
-      ) : null}
+    {permissions.includes('prescriptions.view') ? (
+      <Route
+        path="treatment-prescriptions"
+        element={<h1>Prescription Management</h1>}
+      />
+    ) : null}
 
-      {permissions.includes('care-instructions.view') ? (
-        <Route path="care-instructions">
-          <Route index element={<h1>Care Instructions</h1>} />
-        </Route>
-      ) : null}
+    {permissions.includes('care-instructions.view') ? (
+      <Route path="care-instructions">
+        <Route index element={<h1>Care Instructions</h1>} />
+      </Route>
+    ) : null}
 
-      {permissions.includes('care-orders.view') ? (
-        <Route path="care-orders">
-          <Route index element={<h1>Care Orders</h1>} />
-        </Route>
-      ) : null}
-
-    </Route>
-  )
-}
+    {permissions.includes('care-orders.view') ? (
+      <Route path="care-orders">
+        <Route index element={<h1>Care Orders</h1>} />
+      </Route>
+    ) : null}
+  </Route>
+)
 
 export { PatientRoutes }

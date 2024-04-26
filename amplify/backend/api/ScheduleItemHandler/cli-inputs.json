@@ -5,7 +5,13 @@
       "name": "/v1/resources/appointments/scheduleitem",
       "lambdaFunction": "ScheduleItemFunction",
       "permissions": {
-        "setting": "open"
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
       }
     }
   }
