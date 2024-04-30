@@ -16,8 +16,7 @@ class Validator {
 
         let search = Object.keys(searchObj);
 
-        //ID
-        if (search.hasOwnProperty(ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(ID_COLUMN_NUMBER)) {
             return true;
         }
 
@@ -50,7 +49,7 @@ class Validator {
         console.log(search);
 
         //ID
-        if (search.hasOwnProperty(ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(ID_COLUMN_NUMBER)) {
             return true;
         }
 
@@ -89,7 +88,7 @@ class Validator {
             return false;
         }
 
-        const deleteFields = [ID_COLUMN_NAME];
+        const deleteFields = [ID_COLUMN_NUMBER];
 
         //check that all fields in the query statement are correct
         let falseElementCount = 0;
@@ -112,7 +111,7 @@ class Validator {
 }
 
 class AssignStaffAPI {
-    static ID_COLUMN_NAME = "ID";
+    static ID_COLUMN_NUMBER = "ID";
 
     static getValueForKey = function (query, key) {
         return Object.values(query)[Object.keys(query).indexOf(key)];
@@ -225,7 +224,7 @@ class AssignStaffAPI {
             if (req.body["ACTION_TYPE"] === "INSERT") {
 
                 const queryString = `
-                    INSERT INTO "system".schedule_items (STAFFNAME, PRACTIONER, PATIENT, SHIFT)
+                    INSERT INTO "system".assign_staffs (STAFFNAME, PRACTIONER, PATIENT, SHIFT)
                     VALUES ($1, $2, $3, $4)
                     `;
                 const values = [

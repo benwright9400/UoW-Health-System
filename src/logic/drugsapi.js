@@ -225,7 +225,7 @@ class DrugsAPI {
             if (req.body["ACTION_TYPE"] === "INSERT") {
 
                 const queryString = `
-                    INSERT INTO "system".schedule_items (NAME, TITLE, DIAGNOSIS, HEALTHCAREPLAN)
+                    INSERT INTO "system".drug_items (DRUGNAME, STRENGTH, DOSAGE, AMOUNTDAILY)
                     VALUES ($1, $2, $3, $4)
                     `;
                 const values = [

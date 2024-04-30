@@ -25,7 +25,17 @@ export type AmplifyDependentResourcesAttributes = {
       "ApiName": "string",
       "RootUrl": "string"
     },
+    "DrugHandler": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "HealthcarePlanHandler": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
+    "HealthcarePlanStagesHandler": {
       "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
@@ -128,6 +138,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     },
+    "DrugFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "DrugsFunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
@@ -136,6 +153,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Region": "string"
     },
     "HealthcarePlanFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "HealthcarePlanStagesFunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

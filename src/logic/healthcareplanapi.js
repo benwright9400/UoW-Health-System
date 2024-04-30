@@ -17,7 +17,7 @@ class Validator {
         let search = Object.keys(searchObj);
 
         //ID
-        if (search.hasOwnProperty(ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
 
@@ -50,7 +50,7 @@ class Validator {
         console.log(search);
 
         //ID
-        if (search.hasOwnProperty(ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
 
@@ -81,7 +81,7 @@ class Validator {
         let search = Object.keys(deleteBody);
 
         //ID
-        if (search.hasOwnProperty(ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
 
@@ -89,7 +89,7 @@ class Validator {
             return false;
         }
 
-        const deleteFields = [ID_COLUMN_NAME];
+        const deleteFields = [this.ID_COLUMN_NAME];
 
         //check that all fields in the query statement are correct
         let falseElementCount = 0;
@@ -144,12 +144,12 @@ class HealthcarePlanAPI {
             console.log(req.query);
 
 
-            if (Object.keys(req.query).includes(ID_COLUMN_NAME)) {
+            if (Object.keys(req.query).includes(this.ID_COLUMN_NAME)) {
                 console.log("selecting one by ID");
 
 
 
-                query = await client.query('SELECT * FROM "system".healthcareplan WHERE ID = ' + Number(req.query[ID_COLUMN_NAME]) + ';');
+                query = await client.query('SELECT * FROM "system".healthcareplan WHERE ID = ' + Number(req.query[this.ID_COLUMN_NAME]) + ';');
 
                 result = { success: query };
 
@@ -157,14 +157,14 @@ class HealthcarePlanAPI {
 
             if (paramLength == 0) {
                 console.log("selecting all");
-                query = await client.query('SELECT * FROM "system".books;');
+                query = await client.query('SELECT * FROM "system".healthcareplan;');
 
                 result = { success: query };
 
             }
 
             //compound query
-            if (paramLength > 0 && !Object.keys(req.query).includes(ID_COLUMN_NAME)) {
+            if (paramLength > 0 && !Object.keys(req.query).includes(this.ID_COLUMN_NAME)) {
                 console.log("running multiple iterations");
 
                 let queryString = "SELECT * FROM \"system\".healthcareplan WHERE ";
@@ -286,7 +286,7 @@ class HealthcarePlanAPI {
             const queryString = `
                     DELETE FROM "system".healthcareplan WHERE ID = $1;
                     `;
-            const values = [req.body[ID_COLUMN_NAME]];
+            const values = [req.body[this.ID_COLUMN_NAME]];
 
             let query = await client.query(queryString, values);
             result = { success: query };
@@ -302,4 +302,4 @@ class HealthcarePlanAPI {
 
 }
 
-module.exports = HealthcarePlanAPI;
+export default HealthcarePlanAPI;

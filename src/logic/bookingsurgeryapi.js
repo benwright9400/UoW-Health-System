@@ -17,7 +17,7 @@ class Validator {
 
         let search = Object.keys(searchObj);
 
-        //ID
+    
         if (search.hasOwnProperty(ID_COLUMN_NAME)) {
             return true;
         }

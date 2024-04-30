@@ -171,6 +171,14 @@
         "DrugsFunction": {
           "deploymentBucketName": "amplify-healthsystem-ibtisam-124842-deployment",
           "s3Key": "amplify-builds/DrugsFunction-7a4131664c4536656c4d-build.zip"
+        },
+        "HealthcarePlanStagesFunction": {
+          "deploymentBucketName": "amplify-healthsystem-ibtisam-124842-deployment",
+          "s3Key": "amplify-builds/HealthcarePlanStagesFunction-66484e684663304a3159-build.zip"
+        },
+        "DrugFunction": {
+          "deploymentBucketName": "amplify-healthsystem-ibtisam-124842-deployment",
+          "s3Key": "amplify-builds/DrugFunction-68393331474f4b6d3243-build.zip"
         }
       },
       "api": {
@@ -189,7 +197,9 @@
         "WardOrderHandler": {},
         "BookingSurgeryHandler": {},
         "HealthcarePlanHandler": {},
-        "AssignStaffHandler": {}
+        "AssignStaffHandler": {},
+        "HealthcarePlanStagesHandler": {},
+        "DrugHandler": {}
       }
     }
   }

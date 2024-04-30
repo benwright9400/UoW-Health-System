@@ -70,6 +70,20 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "DrugHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "DrugFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "HealthcarePlanHandler": {
       "dependsOn": [
         {
@@ -79,6 +93,20 @@
           ],
           "category": "function",
           "resourceName": "HealthcarePlanFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "HealthcarePlanStagesHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "HealthcarePlanStagesFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -279,12 +307,22 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "DrugFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "DrugsFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
     "HealthcarePlanFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "HealthcarePlanStagesFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -421,6 +459,22 @@
         }
       ]
     },
+    "AMPLIFY_function_DrugFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DrugFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugFunction"
+        }
+      ]
+    },
     "AMPLIFY_function_DrugsFunction_deploymentBucketName": {
       "usedBy": [
         {
@@ -450,6 +504,22 @@
         {
           "category": "function",
           "resourceName": "HealthcarePlanFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_HealthcarePlanStagesFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "HealthcarePlanStagesFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_HealthcarePlanStagesFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "HealthcarePlanStagesFunction"
         }
       ]
     },
