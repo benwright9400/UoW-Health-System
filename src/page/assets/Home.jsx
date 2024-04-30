@@ -11,9 +11,14 @@ import Wards from './Wards'
 import WardCreationForm from './page/WardCreationForm'
 import Treatments from './Treatments'
 import TreatmentCreationForm from './page/TreatmentCreationForm'
-import TreatmentCategories from './TreatmentCategories'
-import TreatmentCategoriesCreationForm from './page/TreatmentCategoriesCreationForm'
-import WardAdmin from './WardAdmin'
+// import HealthcarePlanAPI from '../../logic/healthcareplanapi'
+import HealthcarePlanForm from '../page/HealthcarePlanForm'
+// import DrugsAPI from '../../logic/drugsapi'
+import DrugsForm from './page/DrugsForm'
+// import BookingSurgeryAPI from '../../logic/bookingsurgeryapi'
+// import BookingForm from './page/BookingSurgeryForm'
+// import AssignStaffAPI from '../../logic/assignstaffapi'
+import AssignStaffForm from './page/AssignStaffForm'
 
 const Links = () => {
   const permissions = useContext(AuthenticationContext).permissions
@@ -55,11 +60,31 @@ const Links = () => {
     }
   }
 
-  if (permissions.includes('treatment.categories.view')) {
-    pages['Treatment Categories'] = {
-      description:
-        'Create, view, update and delete treatment categories within the hopsital.',
-      site: 'treatment-categories'
+  if (permissions.includes('healthcareplans.view')) {
+    pages['Healthcare Plans'] = {
+      description: 'Create, view, update and delete healthcare Plan services provided by the hopsital.',
+      site: 'healthcare plans'
+    }
+  }
+
+  if (permissions.includes('drugs.view')) {
+    pages['Drugs'] = {
+      description: 'Create, view, update and delete drug services provided by the hopsital.',
+      site: 'drugs'
+    }
+  }
+
+  if (permissions.includes('bookings.view')) {
+    pages['Bookings'] = {
+      description: 'Create, view, update and delete booking services provided by the hopsital.',
+      site: 'bookings'
+    }
+  }
+
+  if (permissions.includes('assignstaff.view')) {
+    pages['Assign Staff'] = {
+      description: 'Create, view, update and delete staff assignment services provided by the hopsital.',
+      site: 'staff assignment'
     }
   }
 
@@ -104,6 +129,37 @@ const AssetRoutes = permissions => {
         <Route path="treatments">
           <Route index element={<Treatments />} />
           <Route path="create" element={<TreatmentCreationForm />} />
+        </Route>
+      ) : null}
+      
+
+      {permissions.includes('healthcareplans.view') ? (
+        <Route path="healthcareplans">
+          <Route index element={<HealthcarePlans />} />
+          <Route path="create" element={<HealthcarePlanForm />} />
+        </Route>
+      ) : null}
+
+
+{permissions.includes('drugs.view') ? (
+        <Route path="drugs">
+          <Route index element={<Drugs />} />
+          <Route path="create" element={<DrugsForm />} />
+        </Route>
+      ) : null}
+
+
+{permissions.includes('bookingsurgeries.view') ? (
+        <Route path="bookingsurgeries">
+          <Route index element={<BookingSurgeries />} />
+          <Route path="create" element={<BookingSurgeriesForm />} />
+        </Route>
+      ) : null}
+
+{permissions.includes('assignstaffs.view') ? (
+        <Route path="assignstaffs">
+          <Route index element={<AssignStaff />} />
+          <Route path="create" element={<AssignStaffForm />} />
         </Route>
       ) : null}
 
