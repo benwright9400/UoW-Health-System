@@ -25,7 +25,7 @@ import {
   import AccordionDetails from '@mui/material/AccordionDetails'
   import AccordionSummary from '@mui/material/AccordionSummary'
   import { ArrowDropDown } from '@mui/icons-material'
-  import AssignStaffAPI from '../../logic/assignstaffapi'
+  import AssignStaffAPI from '../logic/assignstaffapi'
   
    
   //TODO1: switch all references to old model to your current model

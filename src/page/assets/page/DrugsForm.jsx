@@ -24,8 +24,8 @@ import {
   import AccordionDetails from '@mui/material/AccordionDetails'
   import AccordionSummary from '@mui/material/AccordionSummary'
   import { ArrowDropDown } from '@mui/icons-material'
-  import DrugsAPI from '../../logic/drugsapi'
-  import DrugsCategoriesAPI from '../../logic/drugscategoriesapi'
+  import DrugsAPI from '../../../logic/drugsapi'
+  import DrugsCategoriesAPI from '../../../logic/drugscategoriesapi'
 
   
   const DrugsForm = props => {
@@ -215,7 +215,8 @@ import {
       )
     }
   
-    const getWardValue = () => {
+    const getDrugValue = () => {
+      //TODO: Convert code to match drug data structure
       if (!form.ward_id) {
         return null
       }
@@ -293,8 +294,8 @@ import {
               setForm({ ...form, drug_id: newVal.id })
             }}
             options={
-              wards
-                ? drug.map(drug => {
+              drugs
+                ? drugs.map(drug => {
                     // console.log(drug)
                     return { label: drug.drug_name, id: drug.drug_id }
                   })

@@ -6,7 +6,7 @@ class Validator {
         ID: Number,
         NAME: String,
         Date: Date,
-        TIME: Time,
+        TIME: String, //evaluated from time
         DEPARTMENT: String,
         MEDICALPROFESSIONAL: String,
     };
@@ -18,7 +18,7 @@ class Validator {
         let search = Object.keys(searchObj);
 
     
-        if (search.hasOwnProperty(ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
 
@@ -51,7 +51,7 @@ class Validator {
         console.log(search);
 
         //ID
-        if (search.hasOwnProperty(ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
 
@@ -82,7 +82,7 @@ class Validator {
         let search = Object.keys(deleteBody);
 
         //ID
-        if (search.hasOwnProperty(ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
 
@@ -90,7 +90,7 @@ class Validator {
             return false;
         }
 
-        const deleteFields = [ID_COLUMN_NAME];
+        const deleteFields = [this.ID_COLUMN_NAME];
 
         //check that all fields in the query statement are correct
         let falseElementCount = 0;
@@ -145,12 +145,12 @@ class BookingSurgeryAPI {
             console.log(req.query);
 
 
-            if (Object.keys(req.query).includes(ID_COLUMN_NAME)) {
+            if (Object.keys(req.query).includes(this.ID_COLUMN_NAME)) {
                 console.log("selecting one by ID");
 
 
 
-                query = await client.query('SELECT * FROM "system".bookingsurgery WHERE ID = ' + Number(req.query[ID_COLUMN_NAME]) + ';');
+                query = await client.query('SELECT * FROM "system".bookingsurgery WHERE ID = ' + Number(req.query[this.ID_COLUMN_NAME]) + ';');
 
                 result = { success: query };
 
@@ -165,7 +165,7 @@ class BookingSurgeryAPI {
             }
 
             //compound query
-            if (paramLength > 0 && !Object.keys(req.query).includes(ID_COLUMN_NAME)) {
+            if (paramLength > 0 && !Object.keys(req.query).includes(this.ID_COLUMN_NAME)) {
                 console.log("running multiple iterations");
 
                 let queryString = "SELECT * FROM \"system\".bookingsurgery WHERE ";
@@ -289,7 +289,7 @@ class BookingSurgeryAPI {
             const queryString = `
                     DELETE FROM "system".bookingsurgery WHERE ID = $1;
                     `;
-            const values = [req.body[ID_COLUMN_NAME]];
+            const values = [req.body[this.ID_COLUMN_NAME]];
 
             let query = await client.query(queryString, values);
             result = { success: query };

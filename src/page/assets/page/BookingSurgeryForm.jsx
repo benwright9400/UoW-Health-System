@@ -25,6 +25,7 @@ import {
   import AccordionSummary from '@mui/material/AccordionSummary'
   import { ArrowDropDown } from '@mui/icons-material'
   import BookingSurgeryAPI from '../../../logic/bookingsurgeryapi'
+import DrugsAPI from '../../../logic/drugsapi'
   
   const BookingSurgeryForm = props => {
     const [message, setMessage] = useState({})
@@ -220,11 +221,12 @@ import {
   
       let filteredDrugs = bookings.filter(booking => booking.booking_id === form.booking_id)
   
-      if (filteredBookings.length === 0) {
+      if (filteredDrugs.length === 0) {
         return null
       }
   
-      return { label: filteredBookings[0].booking_name, id: filteredBookings[0].booking_id }
+      //TODO: switch to drugs data structure
+      return { label: filteredDrugs[0].booking_name, id: filteredDrugs[0].booking_id }
     }
   
     const getBookingCategoryValue = () => {
@@ -291,8 +293,8 @@ import {
               setForm({ ...form, booking_id: newVal.id })
             }}
             options={
-              drugs
-                ? booking.map(booking => {
+              bookings
+                ? bookings.map(booking => {
                     // console.log(booking)
                     return { label: booking.booking_name, id: booking.booking_id }
                   })
@@ -338,5 +340,5 @@ import {
     )
   }
   
-  export default BookingForm
+  export default BookingSurgeryForm
   
