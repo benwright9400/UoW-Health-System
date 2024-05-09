@@ -11,7 +11,7 @@ const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const AWS = require('aws-sdk')
 const { Pool } = require('pg')
-const ScheduleItemAPI = require('./scheduleItemAPI')
+const ShiftAPI = require('./shiftAPI')
 const SecretsManager = require('@aws-sdk/client-secrets-manager')
 
 // declare a new express app
@@ -61,47 +61,47 @@ async function setup() {
   return connection;
 }
 
-app.get('/v1/resources/appointments/scheduleitem', (req, res) => {
+app.get('/v1/resources/shift', (req, res) => {
 
-  // #swagger.description = 'View a schedule item'
+  // #swagger.description = 'View a shift item'
 
-  /* #swagger.parameters['SCHEDULE_ITEM_ID'] = {
+  /* #swagger.parameters['SHIFT_ID'] = {
         in: 'query string',                            
-        description: 'The unique identifier for the schedule item',               
+        description: 'The unique identifier for the shift item',               
         required: false              
   } */
 
-  /* #swagger.parameters['START_TIMESTAMP'] = {
+  /* #swagger.parameters['WARD_ID'] = {
         in: 'query string',
-        description: 'The start timestamp in the string form of an ISO datetime',
+        description: 'The unique identifier for the ward item',
         required: false
   } */
 
-  /* #swagger.parameters['PATIENT_ID'] = {
+  /* #swagger.parameters['STAFF_ID'] = {
         in: 'query string',                            
-        description: 'A patient\'s id.',               
+        description: 'A staff member\'s unique id.',               
         required: false              
   } */
 
-  /* #swagger.parameters['TASK'] = {
+  /* #swagger.parameters['START_TIMESTAMP'] = {
         in: 'query string',                            
-        description: 'An overview of the task to be performed.',               
+        description: 'The start timestamp in ISO string format.',               
         required: false                 
   } */
 
-  /* #swagger.parameters['DESCRIPTION'] = {
+  /* #swagger.parameters['END_TIMESTAMP'] = {
         in: 'query string',                            
-        description: 'A description of the task to be performed.',               
+        description: 'The end timestamp in ISO string format.',               
         required: false                
   } */
 
-  return ScheduleItemAPI.query(req, res, setup);
+  return ShiftAPI.query(req, res, setup);
 
 });
 
-app.post('/v1/resources/appointments/scheduleitem', (req, res) => {
+app.post('/v1/resources/shift', (req, res) => {
 
-  // #swagger.description = 'Insert or update a schedule item'
+  // #swagger.description = 'Update or create a shift item'
 
   /* #swagger.parameters['ACTION_TYPE'] = {
         in: 'body',                            
@@ -109,49 +109,43 @@ app.post('/v1/resources/appointments/scheduleitem', (req, res) => {
         required: false
   } */
 
-  /* #swagger.parameters['SCHEDULE_ITEM_ID'] = {
+  /* #swagger.parameters['SHIFT_ID'] = {
         in: 'body',                            
-        description: 'The unique identifier for the schedule item',               
+        description: 'The unique identifier for the shift item',               
+        required: false              
+  } */
+
+  /* #swagger.parameters['WARD_ID'] = {
+        in: 'body',
+        description: 'The unique identifier for the ward item',
+        required: false
+  } */
+
+  /* #swagger.parameters['STAFF_ID'] = {
+        in: 'body',                            
+        description: 'A staff member\'s unique id.',               
         required: false              
   } */
 
   /* #swagger.parameters['START_TIMESTAMP'] = {
-        in: 'body',
-        description: 'The start timestamp in the string form of an ISO datetime',
-        required: false
-  } */
-
-  /* #swagger.parameters['ESTIMATED_DURATION_MINUTES'] = {
-      in: 'body',
-      description: 'The estimated length of the schedule item in minutes.',
-      required: false
-  } */
-
-  /* #swagger.parameters['PATIENT_ID'] = {
         in: 'body',                            
-        description: 'A patient\'s id.',               
-        required: false              
-  } */
-
-  /* #swagger.parameters['TASK'] = {
-        in: 'body',                            
-        description: 'An overview of the task to be performed.',               
+        description: 'The start timestamp in ISO string format.',               
         required: false                 
   } */
 
-  /* #swagger.parameters['DESCRIPTION'] = {
+  /* #swagger.parameters['END_TIMESTAMP'] = {
         in: 'body',                            
-        description: 'A description of the task to be performed.',               
+        description: 'The end timestamp in ISO string format.',               
         required: false                
   } */
 
-  return ScheduleItemAPI.upsert(req, res, setup);
+  return ShiftAPI.upsert(req, res, setup);
 
 });
 
-app.put('/v1/resources/appointments/scheduleitem', (req, res) => {
+app.put('/v1/resources/shift', (req, res) => {
 
-  // #swagger.description = 'Insert or update a schedule item'
+  // #swagger.description = 'Update or create a shift item'
 
   /* #swagger.parameters['ACTION_TYPE'] = {
         in: 'body',                            
@@ -159,62 +153,51 @@ app.put('/v1/resources/appointments/scheduleitem', (req, res) => {
         required: false
   } */
 
-  /* #swagger.parameters['SCHEDULE_ITEM_ID'] = {
+  /* #swagger.parameters['SHIFT_ID'] = {
         in: 'body',                            
-        description: 'The unique identifier for the schedule item',               
+        description: 'The unique identifier for the shift item',               
+        required: false              
+  } */
+
+  /* #swagger.parameters['WARD_ID'] = {
+        in: 'body',
+        description: 'The unique identifier for the ward item',
+        required: false
+  } */
+
+  /* #swagger.parameters['STAFF_ID'] = {
+        in: 'body',                            
+        description: 'A staff member\'s unique id.',               
         required: false              
   } */
 
   /* #swagger.parameters['START_TIMESTAMP'] = {
-        in: 'body',
-        description: 'The start timestamp in the string form of an ISO datetime',
-        required: false
-  } */
-
-  /* #swagger.parameters['ESTIMATED_DURATION_MINUTES'] = {
-        in: 'body',
-        description: 'The estimated length of the schedule item in minutes.',
-        required: false
-  } */
-
-  /* #swagger.parameters['PATIENT_ID'] = {
         in: 'body',                            
-        description: 'A patient\'s id.',               
-        required: false              
-  } */
-
-  /* #swagger.parameters['TASK'] = {
-        in: 'body',                            
-        description: 'An overview of the task to be performed.',               
+        description: 'The start timestamp in ISO string format.',               
         required: false                 
   } */
 
-  /* #swagger.parameters['DESCRIPTION'] = {
+  /* #swagger.parameters['END_TIMESTAMP'] = {
         in: 'body',                            
-        description: 'A description of the task to be performed.',               
+        description: 'The end timestamp in ISO string format.',               
         required: false                
   } */
 
-  return ScheduleItemAPI.upsert(req, res, setup);
+  return ShiftAPI.upsert(req, res, setup);
 
 });
 
+app.delete('/v1/resources/shift', (req, res) => {
 
-/****************************
-* Delete method *
-****************************/
+  // #swagger.description = 'Delete a shift item'
 
-app.delete('/v1/resources/appointments/scheduleitem', (req, res) => {
-
-  // #swagger.description = 'Delete a schedule item'
-
-  /* #swagger.parameters['SCHEDULE_ITEM_ID'] = {
+  /* #swagger.parameters['SHIFT_ID'] = {
         in: 'body',                            
-        description: 'The unique identifier for the schedule item',               
+        description: 'The unique identifier for the shift item',               
         required: false              
   } */
 
-  return AppointmentAPI.delete(req, res, setup);
+  return ShiftAPI.delete(req, res, setup);
 
 });
 

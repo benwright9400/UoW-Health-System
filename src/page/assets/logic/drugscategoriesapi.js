@@ -17,8 +17,8 @@ class DrugsCategoriesAPI {
     return (await response.body.json()).success
   }
 
-  static upsertDrug = async function (actionType, name, categoryId, drugname, strength, dosage, amountdaily) {
-    if (categoryId != null && actionType == 'INSERT') {
+  static upsertDrug = async function (actionType, name, categoryId, drugname, strength, dosage, amountdaily, id) {
+    if (categoryId != null && actionType == 'UPDATE') {
       const operation = post({
         apiName: 'DrugCategoryHandler',
         path: `/v1/resources/drugs/category`,
@@ -46,7 +46,6 @@ class DrugsCategoriesAPI {
         body: {
           ACTION_TYPE: actionType,
           CATEGORY_NAME: name,
-          ID: id,
           DRUGNAME: drugname,
           STRENTGH: strength,
           DOSAGE: dosage,

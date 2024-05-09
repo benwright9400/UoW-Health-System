@@ -1,7 +1,7 @@
 import { get, del, post, put } from 'aws-amplify/api'
 
 class AssignStaffAPI {
-    static getStaffAssignments = async function (staffId) {
+    static getStaffAssignments = async function (patientId) {
         try {
           const operation = get({
             apiName: 'AssignStaffHandler',
@@ -27,6 +27,7 @@ class AssignStaffAPI {
         patientId,
         assignmentDetails,
         shiftStarts,
+        id,
       ) {
         try {
           const operation = post({

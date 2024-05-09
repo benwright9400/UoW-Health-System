@@ -27,9 +27,10 @@ class DrugsAPI {
     dDosage,
     dBrand,
     pDate,
-    cDuration
+    cDuration,
+    id
   ) {
-    if (patientId != null && actionType == 'INSERT') {
+    if (id != null && actionType == 'UPDATE') {
       const operation = post({
         apiName: 'DrugHandler',
         path: `/v1/resources/drugs`,
@@ -42,7 +43,6 @@ class DrugsAPI {
             DRUG_BRAND: dBrand,
             PRESCRIPTION_DATE: pDate, 
             COURSE_DURATION: cDuration, 
-             
           }
         }
       })
@@ -96,4 +96,4 @@ class DrugsAPI {
   }
 }
 
-export default DRUGSAPI
+export default DrugsAPI

@@ -1,4 +1,3 @@
-import AssignStaffAPI from '../logic/AssignStaffAPI'
 import {
     Typography,
     Box,
@@ -24,7 +23,7 @@ import {
   import AccordionDetails from '@mui/material/AccordionDetails'
   import AccordionSummary from '@mui/material/AccordionSummary'
   import { ArrowDropDown } from '@mui/icons-material'
-  import AssignStaffAPI from '../../assets/logic/AssignStaffAPI'
+  import AssignStaffAPI from '../logic/assignstaffapi'
 
   const AssignStaffForm = props => {
     const [message, setMessage] = useState({})

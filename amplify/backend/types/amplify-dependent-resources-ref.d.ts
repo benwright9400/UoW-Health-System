@@ -70,11 +70,6 @@ export type AmplifyDependentResourcesAttributes = {
       "ApiName": "string",
       "RootUrl": "string"
     },
-    "StaffAssignmentHandler": {
-      "ApiId": "string",
-      "ApiName": "string",
-      "RootUrl": "string"
-    },
     "StaffHandler": {
       "ApiId": "string",
       "ApiName": "string",
@@ -114,6 +109,13 @@ export type AmplifyDependentResourcesAttributes = {
   },
   "function": {
     "AppointmentFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "AssignStaffFunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
@@ -205,13 +207,6 @@ export type AmplifyDependentResourcesAttributes = {
       "Region": "string"
     },
     "ShiftsFunction": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
-    "StaffAssignmentFunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

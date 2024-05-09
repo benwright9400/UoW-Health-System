@@ -1,7 +1,4 @@
 import { get, del, post, put } from 'aws-amplify/api'
-import { fetchAuthSession } from 'aws-amplify/auth'
-import { getCurrentUser, currentSession } from 'aws-amplify/auth';
-
 
 class BookingSurgeryAPI {
   static getPatient = async function () {
@@ -35,9 +32,10 @@ class BookingSurgeryAPI {
     surgery,
     description,
     bookingType,
+    bookingId,
   ) {
 
-    if (bookingId != null && actionType == 'INSERT') {
+    if (bookingId != null && actionType == 'UPDATE') {
       const operation = post({
         apiName: 'BookingSurgeryHandler',
         path: `/v1/resources/booking/surgery`,
@@ -49,8 +47,8 @@ class BookingSurgeryAPI {
             PATIENT_ID: patientId,
             SURGERY: surgery,
             DESCRIPTION: description,
-            Booking_TYPE: bookingType,
-        
+            BOOKING_TYPE: bookingType,
+            BOOKING_SURGERY_ID: bookingId,
           },
           // headers: {Authorization: `Bearer ${token}`}
         }
@@ -73,14 +71,12 @@ class BookingSurgeryAPI {
       options: {
         body: {
           ACTION_TYPE: actionType,
-          BOOKING_SURGERY_ID: bookingSurgeryId,
           START_TIMESTAMP: startTimestamp,
           ESTIMATED_DURATION_MINUTES: estimatedDuration,
           PATIENT_ID: patientId,
           SURGERY: surgery,
           DESCRIPTION: description,
-          ITEM_TYPE: itemType,
-          Booking_Surgery: bookingSurgeryId,
+          ITEM_TYPE: bookingType,
         },
         // headers: {Authorization: `Bearer ${token}`}
       }

@@ -1,3 +1,4 @@
+
 /*
 Copyright 2017 - 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
@@ -30,12 +31,12 @@ app.use(function(req, res, next) {
  * Example get method *
  **********************/
 
-app.get('/v1/resources/drugs/category', function(req, res) {
+app.get('/v1/resources/drugs', function(req, res) {
   // Add your code here
   res.json({success: 'get call succeed!', url: req.url});
 });
 
-app.get('/v1/resources/drugs/category/*', function(req, res) {
+app.get('/v1/resources/drugs/*', function(req, res) {
   // Add your code here
   res.json({success: 'get call succeed!', url: req.url});
 });
@@ -44,12 +45,12 @@ app.get('/v1/resources/drugs/category/*', function(req, res) {
 * Example post method *
 ****************************/
 
-app.post('/v1/resources/drugs/category', function(req, res) {
+app.post('/v1/resources/drugs', function(req, res) {
   // Add your code here
   res.json({success: 'post call succeed!', url: req.url, body: req.body})
 });
 
-app.post('/v1/resources/drugs/category/*', function(req, res) {
+app.post('/v1/resources/drugs/*', function(req, res) {
   // Add your code here
   res.json({success: 'post call succeed!', url: req.url, body: req.body})
 });
@@ -58,12 +59,12 @@ app.post('/v1/resources/drugs/category/*', function(req, res) {
 * Example put method *
 ****************************/
 
-app.put('/v1/resources/drugs/category', function(req, res) {
+app.put('/v1/resources/drugs', function(req, res) {
   // Add your code here
   res.json({success: 'put call succeed!', url: req.url, body: req.body})
 });
 
-app.put('/v1/resources/drugs/category/*', function(req, res) {
+app.put('/v1/resources/drugs/*', function(req, res) {
   // Add your code here
   res.json({success: 'put call succeed!', url: req.url, body: req.body})
 });
@@ -72,12 +73,12 @@ app.put('/v1/resources/drugs/category/*', function(req, res) {
 * Example delete method *
 ****************************/
 
-app.delete('/v1/resources/drugs/category', function(req, res) {
+app.delete('/v1/resources/drugs', function(req, res) {
   // Add your code here
   res.json({success: 'delete call succeed!', url: req.url});
 });
 
-app.delete('/v1/resources/drugs/category/*', function(req, res) {
+app.delete('/v1/resources/drugs/*', function(req, res) {
   // Add your code here
   res.json({success: 'delete call succeed!', url: req.url});
 });

@@ -45,8 +45,7 @@ const DrugCategories = () => {
   }, [])
 
   useEffect(() => {
-   
-    DrugCategoriesApi.getTreatment({}).then(res => setDrugCategories(res.rows))
+    DrugsCategoriesAPI.getDrug({}).then(res => setDrugCategories(res.rows))
     if (message && !message.loading) {
       setTimeout(() => {
         setMessage(undefined)
@@ -54,14 +53,13 @@ const DrugCategories = () => {
     }
   }, [message])
 
-  
   const Columns = [
     {
       field: 'drug_id',
       headerName: 'ID',
       width: 200,
       disableColumnMenu: true,
-      sortable: false,
+      sortable: false
     },
     {
       field: 'category_name',
@@ -95,20 +93,17 @@ const DrugCategories = () => {
 
     console.log(query)
 
-    
-    DrugsCategoriesAPI.getDrugs({})
+    DrugsCategoriesAPI.getDrug({})
       .then(result => {
-        
-        let results = result.rows;
+        let results = result.rows
 
-        console.log(results);
+        console.log(results)
 
-        
         if (query && query.trim() && query.length > 1) {
-          results = results.filter((drug) => {
+          results = results.filter(drug => {
             console.log(drug.name)
             return drug.category_name.indexOf(query) > -1
-          });
+          })
         }
 
         setContents(
@@ -136,12 +131,16 @@ const DrugCategories = () => {
   async function handleDelete() {
     setShowDeleteDialog(false)
 
-    setMessage({ text: 'Deleting drug category...', severity: 'info', loading: true })
+    setMessage({
+      text: 'Deleting drug category...',
+      severity: 'info',
+      loading: true
+    })
 
     console.log('selection')
     console.log(selection)
 
-    DrugsCategoriesAPI.deletedrug(selection)
+    DrugsCategoriesAPI.deleteDrug(selection)
       .then(res => {
         console.log(res)
 
@@ -164,7 +163,6 @@ const DrugCategories = () => {
       })
   }
 
-  
   return (
     <div>
       {showDeleteDialog && (
@@ -251,5 +249,4 @@ const DrugCategories = () => {
   )
 }
 
-
-export default Drugs
+export default DrugCategories

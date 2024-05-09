@@ -15,7 +15,16 @@
       "service": "API Gateway"
     },
     "AssignStaffHandler": {
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "AssignStaffFunction"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
@@ -187,20 +196,6 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
-    "StaffAssignmentHandler": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "StaffAssignmentFunction"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
     "StaffHandler": {
       "dependsOn": [
         {
@@ -306,6 +301,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "AssignStaffFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "BookingSurgeryFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -371,11 +371,6 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "StaffAssignmentFunction": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "StaffFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -416,6 +411,22 @@
         {
           "category": "function",
           "resourceName": "AppointmentFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_AssignStaffFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AssignStaffFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_AssignStaffFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AssignStaffFunction"
         }
       ]
     },

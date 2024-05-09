@@ -35,15 +35,17 @@ class HealthcarePlanAPI {
     startDate,
     patientId,
     healthcarePlan,
+    id
   ) {
 
-    if (bookingId != null && actionType == 'INSERT') {
+    if (id != null && actionType == 'UPDATE') {
       const operation = post({
         apiName: 'HealthcarePlanHandler',
-        path: `/v1/resources/healthcareplany`,
+        path: `/v1/resources/healthcareplan`,
         options: {
           body: {
             ACTION_TYPE: actionType,
+            ID: id,
             TITLE: title,
             NAME: name,
             BIRTH_DATE: birthDate,
@@ -52,7 +54,6 @@ class HealthcarePlanAPI {
             START_DATE: startDate,
             PATIENT_ID: patientId,
             HEALTHCARE_PLAN: healthcarePlan
-        
           },
           // headers: {Authorization: `Bearer ${token}`}
         }
@@ -120,4 +121,4 @@ class HealthcarePlanAPI {
   }
 }
 
-export default HealthcareplanAPI
+export default HealthcarePlanAPI

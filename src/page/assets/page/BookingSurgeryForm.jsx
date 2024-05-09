@@ -1,5 +1,3 @@
-import BookingSurgeryAPI from '../logic/bookingsurgeryapi'
-
 import {
     Typography,
     Box,
