@@ -5,20 +5,16 @@ import { Outlet, Route } from 'react-router-dom'
 
 import IndexGenerator from '../../components/generator/IndexGenerator'
 import { AuthenticationContext } from '../../App'
-
 import { Cleaning, Premises, RoomCreationForm, CleaningOrderForm } from '.'
 import Wards from './Wards'
 import WardCreationForm from './page/WardCreationForm'
 import Treatments from './Treatments'
 import TreatmentCreationForm from './page/TreatmentCreationForm'
-import HealthcarePlanAPI from './../../logic/healthcareplanapi'
-import HealthcarePlanForm from './page/HealthcarePlanForm'
-import DrugsAPI from './../../logic/drugsapi'
-import DrugsForm from './page/DrugsForm'
-import BookingSurgeryAPI from './../../logic/bookingsurgeryapi'
-import BookingForm from './page/BookingSurgeryForm'
-import AssignStaffAPI from './logic/assignstaffapi'
+import HealthcarePlanForm from './Healthcareplan'
+import DrugsForm from './Drugs'
+import BookingSurgeriesForm from './page/BookingSurgeryForm'
 import AssignStaffForm from './page/AssignStaffForm'
+import HealthcarePlanStages from './Healthcareplan'
 
 const Links = () => {
   const permissions = useContext(AuthenticationContext).permissions
@@ -45,17 +41,9 @@ const Links = () => {
     }
   }
 
-  if (permissions.includes('ward.admin')) {
-    pages['Ward Admin'] = {
-      description: 'Manage ward notes, orders and staff assignment for a shift',
-      site: 'ward-admin'
-    }
-  }
-
   if (permissions.includes('treatments.view')) {
     pages['Treatments'] = {
-      description:
-        'Create, view, update and delete treatment services provided by the hopsital.',
+      description: 'Create, view, update and delete treatment services provided by the hopsital.',
       site: 'treatments'
     }
   }
@@ -140,6 +128,14 @@ const AssetRoutes = permissions => {
         </Route>
       ) : null}
 
+      
+{permissions.includes('healthcareplanstages.view') ? (
+        <Route path="healthcareplanstages">
+          <Route index element={<HealthcarePlanStages />} />
+          <Route path="create" element={<HealthcarePlanStagesForm />} />
+        </Route>
+      ) : null}
+
 
 {permissions.includes('drugs.view') ? (
         <Route path="drugs">
@@ -163,18 +159,6 @@ const AssetRoutes = permissions => {
         </Route>
       ) : null}
 
-      {permissions.includes('treatment.categories.view') ? (
-        <Route path="treatment-categories">
-          <Route index element={<TreatmentCategories />} />
-          <Route path="create" element={<TreatmentCategoriesCreationForm />} />
-        </Route>
-      ) : null}
-
-      {permissions.includes('ward.admin') ? (
-        <Route path="ward-admin">
-          <Route index element={<WardAdmin />} />
-        </Route>
-      ) : null}
     </Route>
   )
 }

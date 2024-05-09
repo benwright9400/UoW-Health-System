@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AssignStaffFunction",
+            "StaffAssignmentFunction",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AssignStaffFunction",
+                  "StaffAssignmentFunction",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "healthsystemLambdaRole892cc18e",
+            "healthsystemLambdaRolef53d5461",
             {
               "Fn::Join": [
                 "",
                 [
-                  "healthsystemLambdaRole892cc18e",
+                  "healthsystemLambdaRolef53d5461",
                   "-",
                   {
                     "Ref": "env"

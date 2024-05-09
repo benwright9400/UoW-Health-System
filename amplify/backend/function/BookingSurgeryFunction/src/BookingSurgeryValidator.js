@@ -1,21 +1,26 @@
+import { get, del, post, put } from 'aws-amplify/api'
+import BookingSurgeryAPI from '../../src/page/assets/logic/bookingsurgeryapi';
 
-class Validator {
+class BookingSurgeryValidator {
 
     static fields = {
         ACTION_TYPE: String,
-        SHIFT_ID: Number,
-        WARD_ID: String,
-        STAFF_ID: Number,
-        START_TIMESTAMP: String,
-        END_TIMESTAMP: String,
+        ID: Number,
+        NAME: String,
+        Date: Date,
+        TIME: String, //evaluated from time
+        DEPARTMENT: String,
+        MEDICALPROFESSIONAL: String,
     };
+
+    static ID_COLUMN_NAME = "ID";
 
     static searchIsValid = function (searchObj) {
 
         let search = Object.keys(searchObj);
 
-        //ID
-        if (search.hasOwnProperty("SHIFT_ID")) {
+    
+        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
 
@@ -23,7 +28,6 @@ class Validator {
             return true;
         }
 
-        //check that all fields in the query statement are correct
         let falseElementCount = 0;
         search.forEach(element => {
 
@@ -48,7 +52,7 @@ class Validator {
         console.log(search);
 
         //ID
-        if (search.hasOwnProperty("SHIFT_ID")) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
 
@@ -56,7 +60,6 @@ class Validator {
             return false;
         }
 
-        //check that all fields in the query statement are correct
         let falseElementCount = 0;
         search.forEach(element => {
 
@@ -78,8 +81,7 @@ class Validator {
 
         let search = Object.keys(deleteBody);
 
-        //ID
-        if (search.hasOwnProperty("SHIFT_ID")) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
 
@@ -87,9 +89,8 @@ class Validator {
             return false;
         }
 
-        const deleteFields = ["SHIFT_ID"];
+        const deleteFields = [this.ID_COLUMN_NAME];
 
-        //check that all fields in the query statement are correct
         let falseElementCount = 0;
         search.forEach(element => {
 
@@ -106,14 +107,21 @@ class Validator {
         return false;
 
     };
+    static checkIfBOOKINGSURGERYExists = async function (bookingName) {
+        try {
+            const bookingExists = await BookingSurgeryAPI.checkIfDrugExists(bookingName);
+            return bookingExists;
+        } catch (error) {
+            console.error("Error checking if booking exists:", error);
+            return false;
+        }
+    };
+    
 
 }
 
-class ShiftAPI {
-
-    static hasCorrectPermissions = async function () {
-        return true;
-    }
+class BookingSurgeryValidator {
+    static ID_COLUMN_NAME = "ID";
 
     static getValueForKey = function (query, key) {
         return Object.values(query)[Object.keys(query).indexOf(key)];
@@ -122,10 +130,7 @@ class ShiftAPI {
     static query = async function (req, res, setup) {
         let client = await setup();
 
-        if (!this.hasCorrectPermissions()) {
-            res.status(400).json({ failure: "INCORRECT_PERMISSIONS" });
-            return;
-        }
+
 
         if (!Validator.searchIsValid(req.query)) {
             res.status(400).json({ failure: "INCORRECT_QUERY" });
@@ -135,6 +140,9 @@ class ShiftAPI {
 
         let result = {};
 
+
+
+
         try {
             console.log("starting query");
 
@@ -143,15 +151,14 @@ class ShiftAPI {
             let query;
 
             console.log(req.query);
-            console.log(typeof req.query["SHIFT_ID"]);
 
-            if (Object.keys(req.query).includes("SHIFT_ID")) {
+
+            if (Object.keys(req.query).includes(this.ID_COLUMN_NAME)) {
                 console.log("selecting one by ID");
 
-                console.log(Number(req.query["SHIFT_ID"]));
-                console.log(typeof Number(req.query["SHIFT_ID"]));
 
-                query = await client.query('SELECT * FROM "system".shifts WHERE SHIFT_ID = ' + Number(req.query["SHIFT_ID"]) + ';');
+
+                query = await client.query('SELECT * FROM "system".bookingsurgery WHERE ID = ' + Number(req.query[this.ID_COLUMN_NAME]) + ';');
 
                 result = { success: query };
 
@@ -159,17 +166,17 @@ class ShiftAPI {
 
             if (paramLength == 0) {
                 console.log("selecting all");
-                query = await client.query('SELECT * FROM "system".shifts;');
+                query = await client.query('SELECT * FROM "system".bookingsurgery;');
 
                 result = { success: query };
 
             }
 
             //compound query
-            if (paramLength > 0 && !Object.keys(req.query).includes("SHIFT_ID")) {
+            if (paramLength > 0 && !Object.keys(req.query).includes(this.ID_COLUMN_NAME)) {
                 console.log("running multiple iterations");
 
-                let queryString = "SELECT * FROM \"system\".shifts WHERE ";
+                let queryString = "SELECT * FROM \"system\".bookingsurgery WHERE ";
                 let columnsArray = Object.keys(req.query);
                 let values = Object.values(req.query);
 
@@ -213,10 +220,6 @@ class ShiftAPI {
     static upsert = async function (req, res, setup) {
         let client = await setup();
 
-        if (!this.hasCorrectPermissions()) {
-            res.status(400).json({ failure: "INCORRECT_PERMISSIONS" });
-            return;
-        }
 
         if (!Validator.upsertIsValid(req.body)) {
             res.status(400).json({ failure: "INCORRECT_QUERY" });
@@ -231,10 +234,16 @@ class ShiftAPI {
             if (req.body["ACTION_TYPE"] === "INSERT") {
 
                 const queryString = `
-                    INSERT INTO "system".shifts (WARD_ID, STAFF_ID, START_TIMESTAMP, END_TIMESTAMP)
+                    INSERT INTO "system".schedule_items (NAME, DATE, TIME, DEPARTMENT, MEDICALPROFESSIONAL)
                     VALUES ($1, $2, $3, $4)
                     `;
-                const values = [req.body["WARD_ID"], req.body["STAFF_ID"], req.body["START_TIMESTAMP"], req.body["END_TIMESTAMP"]];
+                const values = [
+                    req.body["NAME"],
+                    req.body["DATE"],
+                    req.body["TIME"],
+                    req.body["DEPARTMENT"],
+                    req.body["MEDICALPROFESSIONAL"],
+                ];
 
                 let query = await client.query(queryString, values);
                 result = { success: query };
@@ -244,15 +253,16 @@ class ShiftAPI {
             if (req.body["ACTION_TYPE"] === "UPDATE") {
 
                 const queryString = `
-                UPDATE "system".shifts SET WARD_ID = $1, STAFF_ID = $2, START_TIMESTAMP = $3, END_TIMESTAMP = $4, WHERE SHIFT_ID = $5;
+                UPDATE "system".bookingsurgery SET NAME = $1, DATE = $2, TIME = $3, DEPARTMENT = $4, MEDICALPROFESSIONAL = $5 WHERE ID = $6;
                 `;
                 const values = [
-                    req.body["WARD_ID"],
-                    req.body["STAFF_ID"],
-                    req.body["START_TIMESTAMP"],
-                    req.body["END_TIMESTAMP"],
+                    req.body["NAME"],
+                    req.body["DATE"],
+                    req.body["TIME"],
+                    req.body["DEPARTMENT"],
+                    req.body["MEDICALPROFESSIONAL"],
                     //where
-                    req.body["SHIFT_ID"]
+                    req.body["ID"]
                 ];
 
                 let query = await client.query(queryString, values);
@@ -272,10 +282,6 @@ class ShiftAPI {
     static delete = async function (req, res, setup) {
         let client = await setup();
 
-        if (!this.hasCorrectPermissions()) {
-            res.status(400).json({ failure: "INCORRECT_PERMISSIONS" });
-            return;
-        }
 
         if (!Validator.deleteIsValid(req.body)) {
             res.status(400).json({ failure: "INCORRECT_QUERY" });
@@ -289,9 +295,9 @@ class ShiftAPI {
         try {
 
             const queryString = `
-                    DELETE FROM "system".shifts WHERE SHIFT_ID = $1;
+                    DELETE FROM "system".bookingsurgery WHERE ID = $1;
                     `;
-            const values = [req.body["SHIFT_ID"]];
+            const values = [req.body[this.ID_COLUMN_NAME]];
 
             let query = await client.query(queryString, values);
             result = { success: query };
@@ -307,4 +313,4 @@ class ShiftAPI {
 
 }
 
-module.exports = ShiftAPI;
+module.exports = BookingSurgeryValidator;

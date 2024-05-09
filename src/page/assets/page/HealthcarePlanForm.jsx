@@ -25,7 +25,8 @@ import {
   import AccordionDetails from '@mui/material/AccordionDetails'
   import AccordionSummary from '@mui/material/AccordionSummary'
   import { ArrowDropDown } from '@mui/icons-material'
-  import HealthcarePlanAPI from '../../../logic/healthcareplanapi'
+  import HealthcarePlanAPI from '../logic/healthcareplanapi'
+
   
 
   const HealthcarePlanForm = props => {
@@ -137,10 +138,10 @@ import {
    
       setMessage({ text: 'Creating pateint healthcare plan...', severity: 'info' })
    
-      AssignStaffAPI.upsertstaff(
+      HealthcarePlanAPI.upserthealthcareplan(
         'INSERT',
         form.patient,
-        form.specialisation,
+        form.healthcareplan,
         form.description,
         form.icon,
         form.id
@@ -208,15 +209,15 @@ import {
             error={errors.patient}
           />
           <TextField
-            label="Enter a patient Specialisation"
+            label="Enter a patient Healthcare Plan"
             onChange={event => {
-              setForm({ ...form, specialisation: event.target.value })
+              setForm({ ...form, healthcareplan: event.target.value })
             }}
             onBlur={event => {
-              setForm({ ...form, specialisation: event.target.value })
+              setForm({ ...form, healthcareplan: event.target.value })
             }}
-            value={form.specialisation}
-            defaultValue={form.specialisation}
+            value={form.healthcareplan}
+            defaultValue={form.healthcareplan}
             error={errors.patient}
           />
           <TextField

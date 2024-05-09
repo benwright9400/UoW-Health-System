@@ -25,7 +25,7 @@ import { BreadcrumbGenerator } from '../../components'
 import { deletePremises, getPremises } from './logic/Premises'
 import { Edit } from '@mui/icons-material'
 import ConfirmationDialogue from '../../components/ConfirmationDialogue'
-import AssignStaffAPI from '../../logic/assignstaffapi'
+import AssignStaffAPI from '../../../../UoW-Health-System/amplify/backend/function/StaffAssignmentFunction/src/AssignStaffAPI'
 
 const AssignStaff = () => {
   const [query, setQuery] = useState('')

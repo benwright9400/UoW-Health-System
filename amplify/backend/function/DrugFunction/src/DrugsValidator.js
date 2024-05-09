@@ -1,23 +1,25 @@
+import { get, del, post, put } from 'aws-amplify/api'
+import DRUGSAPI from '../../src/page/assets/logic/drugsapi';
 
-class Validator {
+class DrugsValidator {
 
     static fields = {
         ACTION_TYPE: String,
-        PATIENT_ID: Number,
-        FIRST_NAME: String,
-        LAST_NAME: String,
-        PHONE_NUMBER: String,
-        DESCRIBED_SYMPTOMS: String,
-        EMAIL: String,
-        NHS_NUMBER: String,
+        ID: Number,
+        DRUGNAME: String,
+        STRENGTH: String,
+        DOSAGE: String,
+        AMOUNTDAILY: String,
     };
+
+    static ID_COLUMN_NUMBER = "ID";
 
     static searchIsValid = function (searchObj) {
 
         let search = Object.keys(searchObj);
 
         //ID
-        if (search.hasOwnProperty("PATIENT_ID")) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NUMBER)) {
             return true;
         }
 
@@ -50,7 +52,7 @@ class Validator {
         console.log(search);
 
         //ID
-        if (search.hasOwnProperty("PATIENT_ID")) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NUMBER)) {
             return true;
         }
 
@@ -81,7 +83,7 @@ class Validator {
         let search = Object.keys(deleteBody);
 
         //ID
-        if (search.hasOwnProperty("PATIENT_ID")) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NUMBER)) {
             return true;
         }
 
@@ -89,7 +91,7 @@ class Validator {
             return false;
         }
 
-        const deleteFields = ["PATIENT_ID"];
+        const deleteFields = [this.ID_COLUMN_NUMBER];
 
         //check that all fields in the query statement are correct
         let falseElementCount = 0;
@@ -109,13 +111,24 @@ class Validator {
 
     };
 
+    static checkIfDrugExists = async function (drugName) {
+        try {
+            const drugExists = await DRUGSAPI.checkIfDrugExists(drugName);
+            return drugExists;
+        } catch (error) {
+            console.error("Error checking if drug exists:", error);
+            return false;
+        }
+    };
+    
+
 }
 
-class PatientAPI {
 
-    static hasCorrectPermissions = async function () {
-        return true;
-    }
+
+
+class DrugsAPI {
+    static ID_COLUMN_NUMBER = "ID";
 
     static getValueForKey = function (query, key) {
         return Object.values(query)[Object.keys(query).indexOf(key)];
@@ -124,10 +137,7 @@ class PatientAPI {
     static query = async function (req, res, setup) {
         let client = await setup();
 
-        if (!this.hasCorrectPermissions()) {
-            res.status(400).json({ failure: "INCORRECT_PERMISSIONS" });
-            return;
-        }
+
 
         if (!Validator.searchIsValid(req.query)) {
             res.status(400).json({ failure: "INCORRECT_QUERY" });
@@ -137,6 +147,9 @@ class PatientAPI {
 
         let result = {};
 
+
+
+
         try {
             console.log("starting query");
 
@@ -145,15 +158,14 @@ class PatientAPI {
             let query;
 
             console.log(req.query);
-            console.log(typeof req.query["PATIENT_ID"]);
 
-            if (Object.keys(req.query).includes("PATIENT_ID")) {
+
+            if (Object.keys(req.query).includes(this.ID_COLUMN_NUMBER)) {
                 console.log("selecting one by ID");
 
-                console.log(Number(req.query["PATIENT_ID"]));
-                console.log(typeof Number(req.query["PATIENT_ID"]));
 
-                query = await client.query('SELECT * FROM "system".patients WHERE PATIENT_ID = ' + Number(req.query["PATIENT_ID"]) + ';');
+
+                query = await client.query('SELECT * FROM "system".drugs WHERE ID = ' + Number(req.query[this.ID_COLUMN_NUMBER]) + ';');
 
                 result = { success: query };
 
@@ -161,17 +173,17 @@ class PatientAPI {
 
             if (paramLength == 0) {
                 console.log("selecting all");
-                query = await client.query('SELECT * FROM "system".patients;');
+                query = await client.query('SELECT * FROM "system".drugs;');
 
                 result = { success: query };
 
             }
 
             //compound query
-            if (paramLength > 0 && !Object.keys(req.query).includes("PATIENT_ID")) {
+            if (paramLength > 0 && !Object.keys(req.query).includes(this.ID_COLUMN_NUMBER)) {
                 console.log("running multiple iterations");
 
-                let queryString = "SELECT * FROM \"system\".patients WHERE ";
+                let queryString = "SELECT * FROM \"system\".drugs WHERE ";
                 let columnsArray = Object.keys(req.query);
                 let values = Object.values(req.query);
 
@@ -215,10 +227,6 @@ class PatientAPI {
     static upsert = async function (req, res, setup) {
         let client = await setup();
 
-        if (!this.hasCorrectPermissions()) {
-            res.status(400).json({ failure: "INCORRECT_PERMISSIONS" });
-            return;
-        }
 
         if (!Validator.upsertIsValid(req.body)) {
             res.status(400).json({ failure: "INCORRECT_QUERY" });
@@ -233,16 +241,14 @@ class PatientAPI {
             if (req.body["ACTION_TYPE"] === "INSERT") {
 
                 const queryString = `
-                    INSERT INTO "system".patients (FIRST_NAME, LAST_NAME, PHONE_NUMBER, DESCRIBED_SYMPTOMS, EMAIL, NHS_NUMBER)
-                    VALUES ($1, $2, $3, $4, $5, $6)
+                    INSERT INTO "system".drug_items (DRUGNAME, STRENGTH, DOSAGE, AMOUNTDAILY)
+                    VALUES ($1, $2, $3, $4)
                     `;
                 const values = [
-                    req.body["FIRST_NAME"], 
-                    req.body["LAST_NAME"], 
-                    req.body["PHONE_NUMBER"], 
-                    req.body["DESCRIBED_SYMPTOMS"], 
-                    req.body["EMAIL"],
-                    req.body["NHS_NUMBER"]
+                    req.body["DRUGNAME"],
+                    req.body["STRENGTH"],
+                    req.body["DOSAGE"],
+                    req.body["AMOUNTDAILY"],
                 ];
 
                 let query = await client.query(queryString, values);
@@ -253,16 +259,15 @@ class PatientAPI {
             if (req.body["ACTION_TYPE"] === "UPDATE") {
 
                 const queryString = `
-                UPDATE "system".patients SET FIRST_NAME = $1, LAST_NAME = $2, PHONE_NUMBER = $3, DESCRIBED_SYMPTOMS = $4, EMAIL = $5, NHS_NUMBER = $6 WHERE PATIENT_ID = $7;
+                UPDATE "system".drugs SET DRUGNAME = $1,STRENGTH = $2, DOSAGE = $3, AMOUNTDAILY = $4 WHERE ID = $5;
                 `;
                 const values = [
-                    req.body["FIRST_NAME"],
-                    req.body["LAST_NAME"],
-                    req.body["PHONE_NUMBER"],
-                    req.body["DESCRIBED_SYMPTOMS"],
-                    req.body["EMAIL"],
+                    req.body["DRUGNAME"],
+                    req.body["STRENGTH"],
+                    req.body["DOSAGE"],
+                    req.body["AMOUNTDAILY"],
                     //where
-                    req.body["PATIENT_ID"]
+                    req.body["ID"]
                 ];
 
                 let query = await client.query(queryString, values);
@@ -282,10 +287,6 @@ class PatientAPI {
     static delete = async function (req, res, setup) {
         let client = await setup();
 
-        if (!this.hasCorrectPermissions()) {
-            res.status(400).json({ failure: "INCORRECT_PERMISSIONS" });
-            return;
-        }
 
         if (!Validator.deleteIsValid(req.body)) {
             res.status(400).json({ failure: "INCORRECT_QUERY" });
@@ -299,9 +300,9 @@ class PatientAPI {
         try {
 
             const queryString = `
-                    DELETE FROM "system".patients WHERE PATIENT_ID = $1;
+                    DELETE FROM "system".drugs WHERE ID = $1;
                     `;
-            const values = [req.body["PATIENT_ID"]];
+            const values = [req.body[this.ID_COLUMN_NUMBER]];
 
             let query = await client.query(queryString, values);
             result = { success: query };
@@ -317,4 +318,4 @@ class PatientAPI {
 
 }
 
-module.exports = PatientAPI;
+module.exports = DrugsValidator;

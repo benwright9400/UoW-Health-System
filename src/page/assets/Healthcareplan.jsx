@@ -25,10 +25,9 @@ import {
   import { deletePremises, getPremises } from './logic/Premises'
   import { Edit } from '@mui/icons-material'
   import ConfirmationDialogue from '../../components/ConfirmationDialogue'
-  import HealthcarePlanAPI from '../../logic/healthcareplanapi'
+  import HealthcarePlanAPI from './logic/healthcareplanapi'
   import HealthcarePlanStagesAPI from './logic/HealthcarePlanStages'
  
-  //TODO8: rename class
   const HealthcarePlanStages = () => {
     const [query, setQuery] = useState('')
     const [message, setMessage] = useState()

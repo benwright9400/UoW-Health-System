@@ -1,7 +1,4 @@
-/* Amplify Params - DO NOT EDIT
-	ENV
-	REGION
-Amplify Params - DO NOT EDIT *//*
+/*
 Copyright 2017 - 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
     http://aws.amazon.com/apache2.0/
@@ -64,7 +61,7 @@ async function setup() {
   return connection;
 }
 
-app.get('/v1/resources/appointments/scheduleitem', (req, res) => {
+app.get('/v1/resources/appointments/scheduleitem', (req, res) => { //
 
   // #swagger.description = 'View a schedule item'
 
@@ -217,7 +214,7 @@ app.delete('/v1/resources/appointments/scheduleitem', (req, res) => {
         required: false              
   } */
 
-  return ScheduleItemAPI.delete(req, res, setup);
+  return AppointmentAPI.delete(req, res, setup);
 
 });
 

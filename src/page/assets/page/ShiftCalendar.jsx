@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { LocalizationProvider, StaticDatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs'
-import DayDisplay from './DayDisplay'
+import DayDisplay from '../../schedule/components/calendar/DayDisplay'
 
 const CALENDAR = 'CALENDAR'
 const DATE_PICKER = 'DATE_PICKER'

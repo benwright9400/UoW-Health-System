@@ -25,8 +25,8 @@ import { BreadcrumbGenerator } from '../../components'
 import { deletePremises, getPremises } from './logic/Premises'
 import { Edit } from '@mui/icons-material'
 import ConfirmationDialogue from '../../components/ConfirmationDialogue'
-import DrugsAPI from '../../logic/drugsapi'
-import DrugsCategoriesAPI from '../../logic/drugscategoriesapi'
+import DrugsAPI from './logic/drugsapi'
+import DrugsCategoriesAPI from './logic/drugscategoriesapi'
 
 const DrugCategories = () => {
   const [query, setQuery] = useState('')

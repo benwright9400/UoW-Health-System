@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Calendar from './calendar/Calendar'
 import EditPage from './calendar/EditPage'
 import { getWindowWidth } from './Util'
-import ShiftsScheduleAPI from '../../logic/shiftscheduleapi'
+import ShiftsScheduleAPI from '../../../amplify/backend/function/ShiftsFunction/src/shiftAPI'
 
 function BookingSurgeryPage() {
   const [editPageOpen, setEditPageOpen] = useState(true)

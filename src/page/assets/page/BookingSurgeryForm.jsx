@@ -1,3 +1,5 @@
+import BookingSurgeryAPI from '../logic/bookingsurgeryapi'
+
 import {
     Typography,
     Box,
@@ -24,8 +26,8 @@ import {
   import AccordionDetails from '@mui/material/AccordionDetails'
   import AccordionSummary from '@mui/material/AccordionSummary'
   import { ArrowDropDown } from '@mui/icons-material'
-  import BookingSurgeryAPI from '../../../logic/bookingsurgeryapi'
-import DrugsAPI from '../../../logic/drugsapi'
+  import BookingSurgeryAPI from '../logic/bookingsurgeryapi'
+  import DrugsAPI from '../logic/drugsapi'
   
   const BookingSurgeryForm = props => {
     const [message, setMessage] = useState({})

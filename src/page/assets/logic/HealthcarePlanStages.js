@@ -12,7 +12,7 @@ class HealthcarePlanStagesAPI {
     return (await response.body.json()).success
   }
 
-  static upsertHealthcarePlan = async function (actionType, name, categoryId) {
+  static upsertHealthcarePlanStages = async function (actionType, name, categoryId) {
     if (categoryId != null && actionType == 'INSERT') {
       const operation = post({
         apiName: 'HealthcarePlanStagesHandler',
@@ -36,7 +36,7 @@ class HealthcarePlanStagesAPI {
         body: {
           ACTION_TYPE: actionType,
           CATEGORY_NAME: name,
-          HEALTHCAREPLAN_CATEGORY_ID: categoryId
+          HEALTHCAREPLANSTAGES_CATEGORY_ID: categoryId
         }
       }
     })

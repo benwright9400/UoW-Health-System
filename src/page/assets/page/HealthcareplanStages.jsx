@@ -1,4 +1,4 @@
-import AssignStaffAPI from '../logic/AssignStaffAPI'
+
 import {
     Typography,
     Box,
@@ -17,6 +17,7 @@ import {
    
   import { useState, useEffect } from 'react'
   import { useLocation, useNavigate } from 'react-router-dom'
+   
   import { BreadcrumbGenerator, Spinbox } from '../../../components'
   import { getBuildings, createPremises } from '../logic/Premises'
   import { MaterialIconPicker } from 'react-material-icon-picker'
@@ -24,9 +25,11 @@ import {
   import AccordionDetails from '@mui/material/AccordionDetails'
   import AccordionSummary from '@mui/material/AccordionSummary'
   import { ArrowDropDown } from '@mui/icons-material'
-  import AssignStaffAPI from '../../assets/logic/AssignStaffAPI'
+  import HealthcarePlanStagesAPI from '../logic/HealthcarePlanStages'
 
-  const AssignStaffForm = props => {
+  
+
+  const HealthcarePlanForm = props => {
     const [message, setMessage] = useState({})
     const [errors, setErrors] = useState({})
    
@@ -54,11 +57,11 @@ import {
       if (props && props.action && props.action === 'UPDATE') {
         //update here
         setForm({
-          staff: location.state.staff_name,
+          patient: location.state.patient_name,
           specialisation: location.state.specialisation,
           description: location.state.description,
           icon: location.state.icon_data,
-          id: location.state.staff_id
+          id: location.state.patient_id
         })
       }
       handleValidation()
@@ -72,21 +75,21 @@ import {
       setMessage(undefined)
       const errors = {}
    
-      //ensure validation matches model
+
       if (!(form.id && form.id.trim())) {
         setMessage({
           severity: 'error',
-          text: 'A staff ID is required, please enter a staff ID'
+          text: 'A patient ID is required, please enter a patient ID'
         })
         errors.building = true
       }
    
-      if (!(form.staff && form.staff.trim())) {
+      if (!(form.patient && form.patient.trim())) {
         setMessage({
           severity: 'error',
-          text: 'A staff name is required - Please enter a staff name'
+          text: 'A patient name is required - Please enter a patient name'
         })
-        errors.staff = true
+        errors.patient = true
       }
    
       setErrors(errors)
@@ -102,19 +105,19 @@ import {
    
       if(action === 'UPDATE') {
    
-        setMessage({ text: 'Updating staff...', severity: 'info' })
+        setMessage({ text: 'Updating patient on patient record...', severity: 'info' })
    
-        //ensure correct API is used
-        AssignStaffAPI.upsertstaff(
+        
+        HealthcarePlanAPI.upsertpatient(
           'UPDATE',
-          form.staff,
+          form.patient,
           form.specialisation,
           form.description,
           form.icon,
           form.id
         )
           .then((res) => {
-            setMessage({ text: 'staff sucessfully created', severity: 'success' })
+            setMessage({ text: 'patient care was sucessfully created', severity: 'success' })
    
             console.log(res);
    
@@ -122,7 +125,7 @@ import {
           })
           .catch((res) => {
             setMessage({
-              text: 'Failed to create staff - Please try again later',
+              text: 'Failed to create patient healthcare plan - Please try again later',
               severity: 'error'
             })
    
@@ -133,24 +136,24 @@ import {
    
       }
    
-      setMessage({ text: 'Creating staff...', severity: 'info' })
+      setMessage({ text: 'Creating pateint healthcare plan...', severity: 'info' })
    
       AssignStaffAPI.upsertstaff(
         'INSERT',
-        form.staff,
+        form.patient,
         form.specialisation,
         form.description,
         form.icon,
         form.id
       )
         .then(() => {
-          setMessage({ text: 'staff sucessfully created', severity: 'success' })
+          setMessage({ text: 'patient healthcare plan was sucessfully created', severity: 'success' })
    
           setTimeout(() => setMessage(undefined), 7000)
         })
         .catch(() => {
           setMessage({
-            text: 'Failed to create staff - Please try again later',
+            text: 'Failed to create patient healthcare plan - Please try again later',
             severity: 'error'
           })
    
@@ -166,7 +169,7 @@ import {
    
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h4">
-            {action === 'UPDATE' ? 'Update' : 'Create'} a staff
+            {action === 'UPDATE' ? 'Update' : 'Create'} a patient
           </Typography>
           <Button onClick={() => navigate(-1)}>Return</Button>
         </Box>
@@ -182,7 +185,7 @@ import {
    
         <Stack spacing={2}>
           <TextField
-            label="Enter a unique 4 digit staff ID (e.g. ORTH)"
+            label="Enter a unique 4 digit patient ID (e.g. ORTH)"
             onChange={event => {
               setForm({ ...form, id: event.target.value })
             }}
@@ -194,19 +197,19 @@ import {
             error={errors.ward}
           />
           <TextField
-            label="Enter a staff Name"
+            label="Enter a patient Name"
             onChange={event => {
-              setForm({ ...form, staff: event.target.value })
+              setForm({ ...form, patient: event.target.value })
             }}
             onBlur={event => {
-              setForm({ ...form, staff: event.target.value })
+              setForm({ ...form, patient: event.target.value })
             }}
-            value={form.staff}
-            defaultValue={form.staff}
-            error={errors.staff}
+            value={form.patient}
+            defaultValue={form.patient}
+            error={errors.patient}
           />
           <TextField
-            label="Enter a staff Specialisation"
+            label="Enter a patient Specialisation"
             onChange={event => {
               setForm({ ...form, specialisation: event.target.value })
             }}
@@ -215,7 +218,7 @@ import {
             }}
             value={form.specialisation}
             defaultValue={form.specialisation}
-            error={errors.staff}
+            error={errors.patient}
           />
           <TextField
             multiline
@@ -262,5 +265,5 @@ import {
     )
   }
    
-  export default AssignStaffForm
+  export default HealthcarePlanForm
    

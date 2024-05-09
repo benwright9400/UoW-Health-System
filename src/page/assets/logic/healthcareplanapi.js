@@ -1,17 +1,13 @@
 import { get, del, post, put } from 'aws-amplify/api'
-import { fetchAuthSession } from 'aws-amplify/auth'
-import { getCurrentUser, currentSession } from 'aws-amplify/auth';
-// import {Signer} from 'aws-amplify';
 
 
-
-class ShiftScheduleAPI {
-  static getStaff = async function () {
+class HealthcarePlanAPI {
+  static getPatient = async function () {
     try {
 
       const operation = get({
-        apiName: 'ShiftSHandler',
-        path: `/v1/resources/shifts`,
+        apiName: 'HealthcarePlanHandler',
+        path: `/v1/resources/healthcareplan`,
         // options: { headers: {Authorization: token}}
       })
 
@@ -29,27 +25,34 @@ class ShiftScheduleAPI {
     }
   }
 
-  static upsertShifts = async function (
+  static upsertHealthcarePlan = async function (
     actionType,
-    wardId,
-    staffId,
-    startId,
+    title,
+    name,
+    birthDate,
+    patientDiagnosis,
     startTimestamp,
-    shiftId,
-  
+    startDate,
+    patientId,
+    healthcarePlan,
   ) {
 
-    if (wardId != null && actionType == 'INSERT') {
+    if (bookingId != null && actionType == 'INSERT') {
       const operation = post({
-        apiName: 'ShiftsHandler',
-        path: `/v1/resources/shifts`,
+        apiName: 'HealthcarePlanHandler',
+        path: `/v1/resources/healthcareplany`,
         options: {
           body: {
             ACTION_TYPE: actionType,
-            WARD_ID,
-            STAFF_ID,
+            TITLE: title,
+            NAME: name,
+            BIRTH_DATE: birthDate,
+            PATIENT_DIAGNOSIS: patientDiagnosis,
             START_TIMESTAMP: startTimestamp,
-            END_TIMESTAMP: startTimestamp
+            START_DATE: startDate,
+            PATIENT_ID: patientId,
+            HEALTHCARE_PLAN: healthcarePlan
+        
           },
           // headers: {Authorization: `Bearer ${token}`}
         }
@@ -67,17 +70,19 @@ class ShiftScheduleAPI {
     }
 
     const operation = post({
-      apiName: 'ShiftsHandler',
-      path: `/v1/resources/shifts`,
+      apiName: 'HealthcarePlanHandler',
+      path: `/v1/resources/healthcareplan`,
       options: {
         body: {
-          ACTION_TYPE: actionType,
-          SHIFT_ID: shiftId,
-          WARD_ID: wardId,
-          STAFF_ID: staffId,
-          START_TIMESTAMP: startTimestamp,
-          END_TIMESTAMP: startTimestamp,
-          
+            ACTION_TYPE: actionType,
+            TITLE: title,
+            NAME: name,
+            BIRTH_DATE: birthDate,
+            PATIENT_DIAGNOSIS: patientDiagnosis,
+            START_TIMESTAMP: startTimestamp,
+            START_DATE: startDate,
+            PATIENT_ID: patientId,
+            HEALTHCARE_PLAN: healthcarePlan
         },
         // headers: {Authorization: `Bearer ${token}`}
       }
@@ -94,14 +99,14 @@ class ShiftScheduleAPI {
     return body.success
   }
 
-  static delete = async function (shiftId) {  
+  static delete = async function (healthcarePlanId) {  
     
     const operation = del({
-      apiName: 'ShiftHandler',
-      path: `/v1/resources/shifts`,
+      apiName: 'HealthcarePlanHandler',
+      path: `/v1/resources/healthcareplan`,
       options: {
         queryParams: {
-          SHIFT_ID: parseInt(shiftId)
+          HEALTHCARE_PLAN_ID: parseInt(healthcarePlanId)
         },
         // headers: {Authorization: `Bearer ${token}`}
       }
@@ -115,4 +120,4 @@ class ShiftScheduleAPI {
   }
 }
 
-export default ShiftsScheduleAPI
+export default HealthcareplanAPI

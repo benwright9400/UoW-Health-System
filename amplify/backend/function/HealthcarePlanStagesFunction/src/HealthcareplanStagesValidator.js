@@ -1,14 +1,21 @@
 
-class Validator {
+import { get, del, post, put } from 'aws-amplify/api'
+import HealthcarePlanStages from '../../src/page/assets/Healthcareplan';
+
+class HealthcareplanStagesValidator {
 
     static fields = {
         ACTION_TYPE: String,
         ID: Number,
         NAME: String,
-        Date: Date,
-        TIME: String, //evaluated from time
-        DEPARTMENT: String,
-        MEDICALPROFESSIONAL: String,
+        TITLE: String,
+        DIAGNOSIS: String,
+        HEALTHCAREPLAN: String,
+        ASSESSMENT: String,
+        TREATMENT: String,
+        MONITORING: String,
+        FOLLOW_UP: String,
+    
     };
 
     static ID_COLUMN_NAME = "ID";
@@ -17,7 +24,7 @@ class Validator {
 
         let search = Object.keys(searchObj);
 
-    
+        //ID
         if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
             return true;
         }
@@ -109,10 +116,20 @@ class Validator {
         return false;
 
     };
+    static checkIfHEALTHCAREPLANSTAGESExists = async function (stageName) {
+        try {
+            const stageExists = await HealthcarePlanStagesAPI.checkIfDrugExists(stageName);
+            return stageExists;
+        } catch (error) {
+            console.error("Error checking if healthcare plan exists:", error);
+            return false;
+        }
+    };
+    
 
 }
 
-class BookingSurgeryAPI {
+class HealthcarePlanStagesAPI {
     static ID_COLUMN_NAME = "ID";
 
     static getValueForKey = function (query, key) {
@@ -150,7 +167,7 @@ class BookingSurgeryAPI {
 
 
 
-                query = await client.query('SELECT * FROM "system".bookingsurgery WHERE ID = ' + Number(req.query[this.ID_COLUMN_NAME]) + ';');
+                query = await client.query('SELECT * FROM "system".healthcareplanstages WHERE ID = ' + Number(req.query[this.ID_COLUMN_NAME]) + ';');
 
                 result = { success: query };
 
@@ -158,7 +175,7 @@ class BookingSurgeryAPI {
 
             if (paramLength == 0) {
                 console.log("selecting all");
-                query = await client.query('SELECT * FROM "system".bookingsurgery;');
+                query = await client.query('SELECT * FROM "system".healthcareplanstages;');
 
                 result = { success: query };
 
@@ -168,7 +185,7 @@ class BookingSurgeryAPI {
             if (paramLength > 0 && !Object.keys(req.query).includes(this.ID_COLUMN_NAME)) {
                 console.log("running multiple iterations");
 
-                let queryString = "SELECT * FROM \"system\".bookingsurgery WHERE ";
+                let queryString = "SELECT * FROM \"system\".healthcareplanstages WHERE ";
                 let columnsArray = Object.keys(req.query);
                 let values = Object.values(req.query);
 
@@ -226,15 +243,18 @@ class BookingSurgeryAPI {
             if (req.body["ACTION_TYPE"] === "INSERT") {
 
                 const queryString = `
-                    INSERT INTO "system".schedule_items (NAME, DATE, TIME, DEPARTMENT, MEDICALPROFESSIONAL)
-                    VALUES ($1, $2, $3, $4)
+                    INSERT INTO "system".schedule_items (NAME, TITLE, DIAGNOSIS, HEALTHCAREPLAN, ASSESSMENT, TREATMENT, MONITORING, FOLLOW-UP)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                     `;
                 const values = [
                     req.body["NAME"],
-                    req.body["DATE"],
-                    req.body["TIME"],
-                    req.body["DEPARTMENT"],
-                    req.body["MEDICALPROFESSIONAL"],
+                    req.body["TITLE"],
+                    req.body["DIAGNOSIS"],
+                    req.body["HEALTHCAREPLAN"],
+                    req.body["ASSESSMENT"],
+                    req.body["TREATMENT"],
+                    req.body["MONITORING"],
+                    req.body["FOLLOW_UP"],
                 ];
 
                 let query = await client.query(queryString, values);
@@ -245,14 +265,17 @@ class BookingSurgeryAPI {
             if (req.body["ACTION_TYPE"] === "UPDATE") {
 
                 const queryString = `
-                UPDATE "system".bookingsurgery SET NAME = $1, DATE = $2, TIME = $3, DEPARTMENT = $4, MEDICALPROFESSIONAL = $5 WHERE ID = $6;
+                UPDATE "system".healthcareplan SET NAME = $1, TITLE = $2, DIAGNOSIS = $3, HEALTHCAREPLAN = $4, ASSESSMENT = $5, TREATMENT = $6, MONITORING = $7, FOLLOW_UP = $8 WHERE ID = $9;
                 `;
                 const values = [
                     req.body["NAME"],
-                    req.body["DATE"],
-                    req.body["TIME"],
-                    req.body["DEPARTMENT"],
-                    req.body["MEDICALPROFESSIONAL"],
+                    req.body["TITLE"],
+                    req.body["DIAGNOSIS"],
+                    req.body["HEALTHCAREPLAN"],
+                    req.body["ASSESSMENT"],
+                    req.body["TREATMENT"],
+                    req.body["MONITORING"],
+                    req.body["FOLLOW_UP"],
                     //where
                     req.body["ID"]
                 ];
@@ -287,7 +310,7 @@ class BookingSurgeryAPI {
         try {
 
             const queryString = `
-                    DELETE FROM "system".bookingsurgery WHERE ID = $1;
+                    DELETE FROM "system".healthcareplan WHERE ID = $1;
                     `;
             const values = [req.body[this.ID_COLUMN_NAME]];
 
@@ -305,4 +328,4 @@ class BookingSurgeryAPI {
 
 }
 
-module.exports = BookingSurgeryAPI;
+export default HealthcareplanStagesValidator;

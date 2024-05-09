@@ -251,15 +251,11 @@
         },
         "BookingSurgeryFunction": {
           "deploymentBucketName": "amplify-healthsystem-ibtisam-124842-deployment",
-          "s3Key": "amplify-builds/BookingSurgeryFunction-356b6138734f542b3739-build.zip"
+          "s3Key": "amplify-builds/BookingSurgeryFunction-6553376a385439303969-build.zip"
         },
         "HealthcarePlanFunction": {
           "deploymentBucketName": "amplify-healthsystem-ibtisam-124842-deployment",
           "s3Key": "amplify-builds/HealthcarePlanFunction-44532f4950613465596c-build.zip"
-        },
-        "AssignStaffFunction": {
-          "deploymentBucketName": "amplify-healthsystem-ibtisam-124842-deployment",
-          "s3Key": "amplify-builds/AssignStaffFunction-49704b34757330565432-build.zip"
         },
         "DrugsFunction": {
           "deploymentBucketName": "amplify-healthsystem-ibtisam-124842-deployment",
@@ -271,8 +267,13 @@
         },
         "DrugFunction": {
           "deploymentBucketName": "amplify-healthsystem-ibtisam-124842-deployment",
-          "s3Key": "amplify-builds/DrugFunction-68393331474f4b6d3243-build.zip"
-        }
+          "s3Key": "amplify-builds/DrugFunction-626a7a30344b774a5674-build.zip"
+        },
+        "DrugsCategoriesFunction": {
+          "deploymentBucketName": "amplify-healthsystem-ibtisam-124842-deployment",
+          "s3Key": "amplify-builds/DrugsCategoriesFunction-75752f4939594447426d-build.zip"
+        },
+        "StaffAssignmentFunction": {}
       },
       "api": {
         "AppointmentsHandler": {},
@@ -292,7 +293,8 @@
         "HealthcarePlanHandler": {},
         "AssignStaffHandler": {},
         "HealthcarePlanStagesHandler": {},
-        "DrugHandler": {}
+        "DrugHandler": {},
+        "DrugsCategoryHandler": {}
       }
     }
   }

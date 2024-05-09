@@ -1,23 +1,25 @@
+import { get, del, post, put } from 'aws-amplify/api'
+import DrugsCategoriesAPI from '../../src/page/assets/logic/drugscategoriesapi';
 
-class Validator {
-
+class DrugsCategoryValidator {
+ 
     static fields = {
         ACTION_TYPE: String,
         ID: Number,
-        NAME: String,
-        TITLE: String,
-        DIAGNOSIS: String,
-        HEALTHCAREPLAN: String,
+        DRUGNAME: String,
+        STRENTGH: String,
+        DOSAGE: String,
+        AMOUNTDAILY: String,
     };
 
-    static ID_COLUMN_NAME = "ID";
+    static ID_COLUMN_NUMBER = "ID";
 
     static searchIsValid = function (searchObj) {
 
         let search = Object.keys(searchObj);
 
         //ID
-        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NUMBER)) {
             return true;
         }
 
@@ -50,7 +52,7 @@ class Validator {
         console.log(search);
 
         //ID
-        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NUMBER)) {
             return true;
         }
 
@@ -81,7 +83,7 @@ class Validator {
         let search = Object.keys(deleteBody);
 
         //ID
-        if (search.hasOwnProperty(this.ID_COLUMN_NAME)) {
+        if (search.hasOwnProperty(this.ID_COLUMN_NUMBER)) {
             return true;
         }
 
@@ -89,7 +91,7 @@ class Validator {
             return false;
         }
 
-        const deleteFields = [this.ID_COLUMN_NAME];
+        const deleteFields = [this.ID_COLUMN_NUMBER];
 
         //check that all fields in the query statement are correct
         let falseElementCount = 0;
@@ -108,11 +110,21 @@ class Validator {
         return false;
 
     };
+    static checkIfDrugCategoryExists = async function (categoryName) {
+        try {
+            const categoryExists = await DrugsCategoriesAPI.checkIfDrugExists(categoryName);
+            return categoryExists;
+        } catch (error) {
+            console.error("Error checking if drugs category exists:", error);
+            return false;
+        }
+    };
+    
 
 }
 
-class HealthcarePlanAPI {
-    static ID_COLUMN_NAME = "ID";
+class DrugsCategoriesAPI {
+    static ID_COLUMN_NUMBER = "ID";
 
     static getValueForKey = function (query, key) {
         return Object.values(query)[Object.keys(query).indexOf(key)];
@@ -144,12 +156,12 @@ class HealthcarePlanAPI {
             console.log(req.query);
 
 
-            if (Object.keys(req.query).includes(this.ID_COLUMN_NAME)) {
+            if (Object.keys(req.query).includes(this.ID_COLUMN_NUMBER)) {
                 console.log("selecting one by ID");
 
 
 
-                query = await client.query('SELECT * FROM "system".healthcareplan WHERE ID = ' + Number(req.query[this.ID_COLUMN_NAME]) + ';');
+                query = await client.query('SELECT * FROM "system".drugs WHERE ID = ' + Number(req.query[this.ID_COLUMN_NUMBER]) + ';');
 
                 result = { success: query };
 
@@ -157,17 +169,17 @@ class HealthcarePlanAPI {
 
             if (paramLength == 0) {
                 console.log("selecting all");
-                query = await client.query('SELECT * FROM "system".healthcareplan;');
+                query = await client.query('SELECT * FROM "system".drugs;');
 
                 result = { success: query };
 
             }
 
             //compound query
-            if (paramLength > 0 && !Object.keys(req.query).includes(this.ID_COLUMN_NAME)) {
+            if (paramLength > 0 && !Object.keys(req.query).includes(this.ID_COLUMN_NUMBER)) {
                 console.log("running multiple iterations");
 
-                let queryString = "SELECT * FROM \"system\".healthcareplan WHERE ";
+                let queryString = "SELECT * FROM \"system\".drugs WHERE ";
                 let columnsArray = Object.keys(req.query);
                 let values = Object.values(req.query);
 
@@ -225,14 +237,14 @@ class HealthcarePlanAPI {
             if (req.body["ACTION_TYPE"] === "INSERT") {
 
                 const queryString = `
-                    INSERT INTO "system".schedule_items (NAME, TITLE, DIAGNOSIS, HEALTHCAREPLAN)
+                    INSERT INTO "system".drug_items (DRUGNAME, STRENGTH, DOSAGE, AMOUNTDAILY)
                     VALUES ($1, $2, $3, $4)
                     `;
                 const values = [
-                    req.body["NAME"],
-                    req.body["TITLE"],
-                    req.body["DIAGNOSIS"],
-                    req.body["HEALTHCAREPLAN"],
+                    req.body["DRUGNAME"],
+                    req.body["STRENGTH"],
+                    req.body["DOSAGE"],
+                    req.body["AMOUNTDAILY"],
                 ];
 
                 let query = await client.query(queryString, values);
@@ -243,13 +255,13 @@ class HealthcarePlanAPI {
             if (req.body["ACTION_TYPE"] === "UPDATE") {
 
                 const queryString = `
-                UPDATE "system".healthcareplan SET NAME = $1, TITLE = $2, DIAGNOSIS = $3, HEALTHCAREPLAN = $4 WHERE ID = $5;
+                UPDATE "system".drugs SET DRUGNAME = $1,STRENGTH = $2, DOSAGE = $3, AMOUNTDAILY = $4 WHERE ID = $5;
                 `;
                 const values = [
-                    req.body["NAME"],
-                    req.body["TITLE"],
-                    req.body["DIAGNOSIS"],
-                    req.body["HEALTHCAREPLAN"],
+                    req.body["DRUGNAME"],
+                    req.body["STRENGTH"],
+                    req.body["DOSAGE"],
+                    req.body["AMOUNTDAILY"],
                     //where
                     req.body["ID"]
                 ];
@@ -284,9 +296,9 @@ class HealthcarePlanAPI {
         try {
 
             const queryString = `
-                    DELETE FROM "system".healthcareplan WHERE ID = $1;
+                    DELETE FROM "system".drugs WHERE ID = $1;
                     `;
-            const values = [req.body[this.ID_COLUMN_NAME]];
+            const values = [req.body[this.ID_COLUMN_NUMBER]];
 
             let query = await client.query(queryString, values);
             result = { success: query };
@@ -302,4 +314,4 @@ class HealthcarePlanAPI {
 
 }
 
-export default HealthcarePlanAPI;
+module.exports = DrugsValidatorAPI;

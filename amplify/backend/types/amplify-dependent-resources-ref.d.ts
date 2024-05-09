@@ -30,6 +30,11 @@ export type AmplifyDependentResourcesAttributes = {
       "ApiName": "string",
       "RootUrl": "string"
     },
+    "DrugsCategoryHandler": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "HealthcarePlanHandler": {
       "ApiId": "string",
       "ApiName": "string",
@@ -61,6 +66,11 @@ export type AmplifyDependentResourcesAttributes = {
       "RootUrl": "string"
     },
     "ShiftsHandler": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
+    "StaffAssignmentHandler": {
       "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
@@ -110,13 +120,6 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     },
-    "AssignStaffFunction": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
     "BookingSurgeryFunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
@@ -139,6 +142,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Region": "string"
     },
     "DrugFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "DrugsCategoriesFunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
@@ -195,6 +205,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Region": "string"
     },
     "ShiftsFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "StaffAssignmentFunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

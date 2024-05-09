@@ -15,16 +15,7 @@
       "service": "API Gateway"
     },
     "AssignStaffHandler": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "AssignStaffFunction"
-        }
-      ],
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
@@ -79,6 +70,20 @@
           ],
           "category": "function",
           "resourceName": "DrugFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "DrugsCategoryHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "DrugsCategoriesFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -177,6 +182,20 @@
           ],
           "category": "function",
           "resourceName": "ShiftsFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "StaffAssignmentHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "StaffAssignmentFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -287,11 +306,6 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "AssignStaffFunction": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "BookingSurgeryFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -308,6 +322,11 @@
       "service": "Lambda"
     },
     "DrugFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "DrugsCategoriesFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -344,11 +363,15 @@
     },
     "ScheduleItemFunction": {
       "build": true,
-      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
     "ShiftsFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "StaffAssignmentFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -393,22 +416,6 @@
         {
           "category": "function",
           "resourceName": "AppointmentFunction"
-        }
-      ]
-    },
-    "AMPLIFY_function_AssignStaffFunction_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "AssignStaffFunction"
-        }
-      ]
-    },
-    "AMPLIFY_function_AssignStaffFunction_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "AssignStaffFunction"
         }
       ]
     },
@@ -473,6 +480,22 @@
         {
           "category": "function",
           "resourceName": "DrugFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DrugsCategoriesFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugsCategoriesFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DrugsCategoriesFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugsCategoriesFunction"
         }
       ]
     },

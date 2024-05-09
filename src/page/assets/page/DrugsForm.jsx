@@ -24,8 +24,8 @@ import {
   import AccordionDetails from '@mui/material/AccordionDetails'
   import AccordionSummary from '@mui/material/AccordionSummary'
   import { ArrowDropDown } from '@mui/icons-material'
-  import DrugsAPI from '../../../logic/drugsapi'
-  import DrugsCategoriesAPI from '../../../logic/drugscategoriesapi'
+  import DrugsAPI from '../logic/drugsapi'
+  import DrugsCategoriesAPI from '../logic/drugscategoriesapi'
 
   
   const DrugsForm = props => {

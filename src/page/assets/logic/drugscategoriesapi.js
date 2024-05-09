@@ -1,6 +1,11 @@
 import { get, del, post, put } from 'aws-amplify/api'
 
 class DrugsCategoriesAPI {
+  static drugBrands = ["Brand A", "Brand B", "Brand C"];
+  static drugTypes = ["Analgesic", "Antibiotic", "Antihistamine"];
+  static isForAdult = true;
+  static isForChild = false;
+
   static getDrug = async function (query) {
     const operation = get({
       apiName: 'DrugCategoryHandler',
@@ -12,7 +17,7 @@ class DrugsCategoriesAPI {
     return (await response.body.json()).success
   }
 
-  static upsertDrug = async function (actionType, name, categoryId) {
+  static upsertDrug = async function (actionType, name, categoryId, drugname, strength, dosage, amountdaily) {
     if (categoryId != null && actionType == 'INSERT') {
       const operation = post({
         apiName: 'DrugCategoryHandler',
@@ -20,7 +25,12 @@ class DrugsCategoriesAPI {
         options: {
           body: {
             ACTION_TYPE: actionType,
-            CATEGORY_NAME: name
+            CATEGORY_NAME: name,
+            ID: id,
+            DRUGNAME: drugname,
+            STRENTGH: strength,
+            DOSAGE: dosage,
+            AMOUNTDAILY: amountdaily,
           }
         }
       })
@@ -36,7 +46,11 @@ class DrugsCategoriesAPI {
         body: {
           ACTION_TYPE: actionType,
           CATEGORY_NAME: name,
-          DRUG_CATEGORY_ID: categoryId
+          ID: id,
+          DRUGNAME: drugname,
+          STRENTGH: strength,
+          DOSAGE: dosage,
+          AMOUNTDAILY: amountdaily,
         }
       }
     })

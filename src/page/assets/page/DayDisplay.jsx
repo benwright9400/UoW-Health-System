@@ -8,7 +8,8 @@ import {
   } from '@mui/material'
   import { toTwoDigits } from '../Util'
   import { useEffect, useState } from 'react'
-  import ScheduleItemAPI from '../../apis/ScheduleItemAPI'
+  import BookingSurgeryAPI from '../logic/bookingsurgeryapi'
+  
   
   function getHour(quarterHours) {
     let hours = Math.floor(quarterHours / 4)
@@ -47,25 +48,25 @@ import {
   }
   
   function DayDisplay(props) {
-    const [items, setItems] = useState([])
+    const [bookings, setBookings] = useState([])
     const [lastDate, setLastDate] = useState('')
   
     useEffect(() => {
       let equal = true
-      // props.scheduleItems.forEach((item, index) => {
-      //   console.log(JSON.stringify(item) + ' : ' + JSON.stringify(items))
+      // props.bookingSurgeries.forEach((booking, index) => {
+      //   console.log(JSON.stringify(booking) + ' : ' + JSON.stringify(bookings))
   
       //   if (
       //     !(
-      //       index < items.length &&
-      //       JSON.stringify(item) === JSON.stringify(items[index])
+      //       index < bookings.length &&
+      //       JSON.stringify(item) === JSON.stringify(bookings[index])
       //     )
       //   ) {
       //     equal = false
       //   }
       // })
   
-      if (props.scheduleItems.length != items.length) {
+      if (props.bookingSurgeries.length != bookings.length) {
         equal = false
       }
   
@@ -73,7 +74,7 @@ import {
         refresh()
       }
   
-      if (items.length === 0) {
+      if (bookings.length === 0) {
         refresh()
       }
   
@@ -86,10 +87,10 @@ import {
       // if (lastDate != props.date) {
       setLastDate(props.date)
   
-      console.log(props.scheduleItems)
-      let filteredScheduleItems = props.scheduleItems.filter(item => {
+      console.log(props.bookingSurgeries)
+      let filteredBookingSurgeries = props.bookingSurgeries.filter(booking => {
         let selectedDate = new Date(props.date)
-        let queryDate = new Date(item.start_timestamp)
+        let queryDate = new Date(booking.start_timestamp)
   
         let daysEqual = selectedDate.getDate() === queryDate.getDate()
         let monthsEqual = selectedDate.getMonth() === queryDate.getMonth()
@@ -98,8 +99,8 @@ import {
         return daysEqual && yearsEqual && monthsEqual
       })
   
-      console.log(filteredScheduleItems)
-      setItems(filteredScheduleItems)
+      console.log(filteredBookingSurgeries)
+      setItems(filteredBookingSurgeries)
       // }
     }
   
@@ -136,22 +137,22 @@ import {
           </Box>
   
           {items.map(e => {
-            const itemTimestamp = new Date(e.start_timestamp)
+            const bookingTimestamp = new Date(e.start_timestamp)
             let quartersStart =
-              itemTimestamp.getHours() * 4 +
-              Math.floor(itemTimestamp.getMinutes() / 15)
+              bookingTimestamp.getHours() * 4 +
+              Math.floor(bookingTimestamp.getMinutes() / 15)
             let quartersDuration = e.estimated_duration_minutes
             return (
               <CalendarItemCard
-                id={e.schedule_item_id}
+                id={e.booking_surgery_id}
                 onClick={event =>
-                  props.cardClicked(e.schedule_item_id, e.item_type)
+                  props.cardClicked(e.booking_surgery_id, e.surgery_type)
                 }
                 quartersStart={quartersStart}
                 quartersDuration={quartersDuration}
                 name={e.task}
-                isEvent={e.item_type === 'EVENT'}
-                item={e}
+                isEvent={e.booking_type === 'EVENT'}
+                booking={e}
               />
             )
           })}
