@@ -8,7 +8,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
 import { Navigation, Authentication, Landing } from './page'
-import { getAuthorisation } from './logic/authentication'
+import { getAuthorisation } from './page/assets/logic/authentication'
 
 import { StaffRoutes, PatientRoutes, AssetRoutes, ScheduleRoutes } from './page'
 

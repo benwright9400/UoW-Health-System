@@ -14,6 +14,25 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "AssignStaffHandler": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "BookingSurgeryHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "BookingSurgeryFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "BuildingHandler": {
       "dependsOn": [
         {
@@ -42,7 +61,7 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
-    "OrderNoteHandler": {
+    "DrugHandler": {
       "dependsOn": [
         {
           "attributes": [
@@ -50,7 +69,49 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "OrderWardFunction"
+          "resourceName": "DrugFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "DrugsCategoryHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "DrugsCategoriesFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "HealthcarePlanHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "HealthcarePlanFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "HealthcarePlanStagesHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "HealthcarePlanStagesFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -121,6 +182,20 @@
           ],
           "category": "function",
           "resourceName": "ShiftsFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "StaffAssignmentHandler": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "StaffAssignmentFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -231,6 +306,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "BookingSurgeryFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "BuildingFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -241,7 +321,27 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "OrderWardFunction": {
+    "DrugFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "DrugsCategoriesFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "DrugsFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "HealthcarePlanFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "HealthcarePlanStagesFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -263,11 +363,15 @@
     },
     "ScheduleItemFunction": {
       "build": true,
-      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
     "ShiftsFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "StaffAssignmentFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -315,6 +419,22 @@
         }
       ]
     },
+    "AMPLIFY_function_BookingSurgeryFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "BookingSurgeryFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_BookingSurgeryFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "BookingSurgeryFunction"
+        }
+      ]
+    },
     "AMPLIFY_function_BuildingFunction_deploymentBucketName": {
       "usedBy": [
         {
@@ -347,19 +467,83 @@
         }
       ]
     },
-    "AMPLIFY_function_OrderWardFunction_deploymentBucketName": {
+    "AMPLIFY_function_DrugFunction_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "OrderWardFunction"
+          "resourceName": "DrugFunction"
         }
       ]
     },
-    "AMPLIFY_function_OrderWardFunction_s3Key": {
+    "AMPLIFY_function_DrugFunction_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "OrderWardFunction"
+          "resourceName": "DrugFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DrugsCategoriesFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugsCategoriesFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DrugsCategoriesFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugsCategoriesFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DrugsFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugsFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DrugsFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DrugsFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_HealthcarePlanFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "HealthcarePlanFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_HealthcarePlanFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "HealthcarePlanFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_HealthcarePlanStagesFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "HealthcarePlanStagesFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_HealthcarePlanStagesFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "HealthcarePlanStagesFunction"
         }
       ]
     },

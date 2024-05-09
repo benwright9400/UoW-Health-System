@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/v1/resources/healthcareplan/stages": {
+      "name": "/v1/resources/healthcareplan/stages",
+      "lambdaFunction": "HealthcarePlanStagesFunction",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
